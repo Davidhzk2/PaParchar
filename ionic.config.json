@@ -1,0 +1,7 @@
+{
+  "name": "paparchar-app",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
