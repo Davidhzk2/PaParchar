@@ -1,120 +1,32 @@
 .splash-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+
+  &::part(scroll) {
+    display: grid;
+    place-items: center;
+  }
+
+  position: relative;
   height: 100%;
   --background: linear-gradient(to bottom, #C91C61, #944AB3);
 
 }
 
-.splash-content {
-  text-align: center;
-  width: 100%;
-  padding: 20px;
+.loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
 }
 
-.logo-container {
-  margin-bottom: 60px;
-  animation: fadeInDown 0.8s ease-out;
+.logoLoader{
+  width: clamp(0rem, 66vw, 20rem);
+  height: auto;
+  animation: bounceLogo 0.7s cubic-bezier(0, 0.005, 0.32, 1.63) 1.2s forwards;
+  transform: scale(0);
 }
 
-.logo-title {
-  font-size: 36px;
-  font-weight: 900;
-  color: white;
-  margin: 0;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-  letter-spacing: 2px;
-}
-
-.loading-container {
-  margin-bottom: 40px;
-  animation: fadeInUp 0.8s ease-out 0.2s both;
-}
-
-.loading-spinner {
-  margin-bottom: 30px;
-  height: 80px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.spinner {
-  width: 60px;
-  height: 60px;
-  border: 4px solid rgba(255, 255, 255, 0.3);
-  border-top-color: white;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.progress-bar {
-  width: 100%;
-  max-width: 300px;
-  height: 8px;
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 10px;
-  margin: 0 auto 20px;
-  overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-}
-
-.progress-fill {
-  height: 100%;
-  background: linear-gradient(90deg, #4ecdc4, #44af69);
-  border-radius: 10px;
-  transition: width 0.3s ease;
-  box-shadow: 0 0 10px rgba(78, 205, 196, 0.6);
-}
-
-.loading-text {
-  color: white;
-  font-size: 14px;
-  font-weight: 600;
-  margin: 0;
-}
-
-.subtitle {
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 16px;
-  margin: 0;
-  animation: fadeIn 1.5s ease-out 0.5s both;
-}
-
-@keyframes fadeInDown {
-  from {
-    opacity: 0;
-    transform: translateY(-30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+@keyframes bounceLogo {
+  0% { transform: scale(0) }
+  100% { transform: scale(1.2) }
 }

@@ -1,21 +1,4 @@
 <ion-content class="splash-container">
-  <div class="splash-content">
-    <div class="logo-container">
-      <h1 class="logo-title">Pa Parchar</h1>
-    </div>
-
-    <div class="loading-container">
-      <div class="loading-spinner">
-        <div class="spinner"></div>
-      </div>
-      
-      <div class="progress-bar">
-        <div class="progress-fill" [style.width.%]="loadingProgress"></div>
-      </div>
-      
-      <p class="loading-text">{{ loadingProgress }}%</p>
-    </div>
-
-    <p class="subtitle">Preparando la diversión...</p>
-  </div>
+  <img class="logoLoader" src="assets/Logo.png" alt="Logo Pa parchar" />
+  <rive-loader class="loader"></rive-loader>
 </ion-content>
