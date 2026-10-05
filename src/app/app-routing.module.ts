@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import {LoadingComponent} from './features/loading/loading.component';
 
 const routes: Routes = [
   {
@@ -8,9 +9,13 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'home',
+    component: LoadingComponent,
     pathMatch: 'full'
   },
+  {
+    path: 'loading',
+    component: LoadingComponent
+  }
 ];
 
 @NgModule({

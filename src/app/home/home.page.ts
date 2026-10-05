@@ -7,7 +7,13 @@ import { Component } from '@angular/core';
   standalone: false,
 })
 export class HomePage {
+  players: string[] = [];
 
-  constructor() {}
+  onAddCard() {
+    this.players.push('Jugador');
+  }
 
+  onRemoveCard(index: number) {
+    this.players.splice(index, 1);
+  }
 }
