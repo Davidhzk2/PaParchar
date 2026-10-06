@@ -24,6 +24,8 @@
   height: auto;
   animation: bounceLogo 0.7s cubic-bezier(0, 0.005, 0.32, 1.63) 1.2s forwards;
   transform: scale(0);
+
+  view-transition-name: brand-logo;
 }
 
 @keyframes bounceLogo {

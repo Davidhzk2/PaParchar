@@ -5,14 +5,6 @@ import { Rive } from '@rive-app/webgl2';
   selector: 'rive-loader',
   standalone: true,
   template: `<canvas #riveCanvas aria-hidden="true"></canvas>`,
-  /*styles: [`
-
-    canvas {
-      display: block;
-      width: 100%;
-      height: 100%;
-    }
-  `]*/
   styleUrls: ['./loader.component.scss'],
 })
 export class RiveLoaderComponent implements AfterViewInit, OnDestroy {

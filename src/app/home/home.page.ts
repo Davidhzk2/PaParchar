@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -6,8 +7,11 @@ import { Component } from '@angular/core';
   styleUrls: ['home.page.scss'],
   standalone: false,
 })
+
 export class HomePage {
   players: string[] = [];
+
+  constructor(private navCtrl: NavController) {}
 
   onAddCard() {
     this.players.push('Jugador');
@@ -15,5 +19,9 @@ export class HomePage {
 
   onRemoveCard(index: number) {
     this.players.splice(index, 1);
+  }
+
+  startGame(){
+    this.navCtrl.navigateRoot(['/intensity']);
   }
 }

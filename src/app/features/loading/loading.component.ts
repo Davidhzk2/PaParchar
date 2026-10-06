@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-loading',
@@ -10,11 +10,11 @@ import { Router } from '@angular/router';
 export class LoadingComponent implements OnInit, OnDestroy {
   private navigationTimer?: ReturnType<typeof setTimeout>;
 
-  constructor(private router: Router) {}
+  constructor(private navCtrl: NavController) {}
 
   ngOnInit(): void {
     this.navigationTimer = setTimeout(() => {
-      void this.router.navigate(['/home']);
+      void this.navCtrl.navigateRoot(['/home']);
     }, 3000);
   }
 
