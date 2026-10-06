@@ -2,6 +2,7 @@
 import { AddUserModalComponent } from '../features/add-user-modal/add-user-modal.component';
 import { ChangeDetectorRef, Component, ElementRef, ViewChild, signal } from '@angular/core';
 import { NavController, ModalController } from '@ionic/angular/lazy';
+import { Player } from '../core/models/player.model';
 
 @Component({
   selector: 'app-home',
@@ -12,7 +13,7 @@ import { NavController, ModalController } from '@ionic/angular/lazy';
 export class HomePage {
   @ViewChild('logoWrapper') logoWrapper!: ElementRef<HTMLElement>;
 
-  players: string[] = [];
+  players: Player[] = [];
   isAddUserModalOpen = signal(false);
 
   constructor(
@@ -34,10 +35,18 @@ export class HomePage {
         component: AddUserModalComponent,
         cssClass: 'retro-tv-modal',
       });
-      const dismissed = addUserModal.onDidDismiss();
+      const dismissed = addUserModal.onDidDismiss<{
+        name: string;
+        avatar: string;
+        preferGender: string;
+      }>();
 
       await addUserModal.present();
-      await dismissed;
+      const { data, role } = await dismissed;
+      if (role === 'confirm' && data) {
+        this.players = [...this.players, data];
+        this.cdr.detectChanges();
+      }
     } finally {
       this.isAddUserModalOpen.set(false);
     }
@@ -75,7 +84,15 @@ export class HomePage {
     }, { once: true });
   }
 
-  onAddCard() { this.players.push('Jugador'); }
   onRemoveCard(index: number) { this.players.splice(index, 1); }
+  getGenderIcon(preferGender: string): string {
+    const icons: Record<string, string> = {
+      both: 'assets/Iconos/maleFemale.svg',
+      female: 'assets/Iconos/female.svg',
+      male: 'assets/Iconos/male.svg',
+    };
+
+    return icons[preferGender] ?? icons['both'];
+  }
   startGame() { this.navCtrl.navigateRoot(['/intensity']); }
 }

@@ -8,12 +8,24 @@ import { ModalController } from '@ionic/angular/lazy';
   standalone: false,
 })
 export class AddUserModalComponent  implements OnInit {
-  name:string = '';
+  playerName:string = '';
   gender = 'both';
+  avatar = 'assets/Logo.png';
 
   constructor(private modalCtrl: ModalController) { }
 
   ngOnInit() {}
+
+  addPlayer(){
+    if(!this.playerName.trim()) return;
+
+    this.modalCtrl.dismiss({
+      name: this.playerName.trim(),
+      avatar: this.avatar,
+      preferGender: this.gender,
+    }, 'confirm');
+
+  }
 
   closeModal(){
     this.modalCtrl.dismiss();

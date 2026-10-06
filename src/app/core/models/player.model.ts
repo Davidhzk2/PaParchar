@@ -1,6 +1,5 @@
-export interface Player{
-    name: string;
-    Genre: string;  
-    avatar: string;
-    genre_preference: string;
+export interface Player {
+  name: string;
+  avatar: string;
+  preferGender: string;
 }

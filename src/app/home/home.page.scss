@@ -193,17 +193,44 @@ h1 {
         width: 100%;
         height: 100%;
         border-radius: 50%;
-        background-color: yellow;
+        background-color: #a34eb5;
+
+        &.gender-female {
+          background-color: #e44055;
+        }
+
+        &.gender-male {
+          background-color: #078fbe;
+        }
       }
 
       .player{
+        position: relative;
+        z-index: 1;
         width: 100%;
         height: 100%;
         display: block;
+        object-fit: contain;
       }
 
       .gender{
         position: absolute;
+        z-index: 2;
+        right: -0.25rem;
+        bottom: -0.25rem;
+        display: grid;
+        width: 2rem;
+        height: 2rem;
+        place-items: center;
+        border: 2px solid #40204D;
+        border-radius: 50%;
+        background: #302536;
+
+        img {
+          width: 1.5rem;
+          height: 1.5rem;
+          object-fit: contain;
+        }
       }
       
     }

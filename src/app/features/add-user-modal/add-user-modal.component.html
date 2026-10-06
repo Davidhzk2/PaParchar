@@ -17,6 +17,7 @@
         type="text"
         placeholder="Nombre del jugador"
         autocomplete="off"
+        [(ngModel)]="playerName"
       />
       <fieldset class="gender-fieldset">
         <legend>Quiero jugar con</legend>
@@ -57,7 +58,7 @@
         </div>
       </fieldset>
 
-      <button class="button-add" type="button">Agregar jugador</button>
+      <button class="button-add" type="button"  (click)="addPlayer()">Agregar jugador</button>
       <button class="button-cancel" type="button" (click)="closeModal()">
         Cancelar
       </button>
