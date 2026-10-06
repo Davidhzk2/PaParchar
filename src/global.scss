@@ -40,15 +40,35 @@
 	--ion-font-family: 'Boogaloo', sans-serif;
 }
 
+*{
+	box-sizing: border-box;
+}
+
 body {
 	font-family: 'Boogaloo', sans-serif;
 }
 
-::view-transition-group(brand-logo) {
-  animation-duration: 700ms;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	margin: 0;
+	font-family: 'Boogaloo', sans-serif;
+	-webkit-text-stroke: 0.6rem #40204D;
+	paint-order: stroke fill;
+	stroke-linejoin: round;
+
+	text-shadow: 4px 6px 0 #40204D,
+	6px 7px 0 #40204D,
+	6px 5px 0 #40204D;
+
+	color: #FFF;
 }
 
-::view-transition-old(brand-logo),
-::view-transition-new(brand-logo) {
-  animation-duration: 700ms;
+button{
+	background-color: transparent;
+	border: none;
+	outline: none;
 }

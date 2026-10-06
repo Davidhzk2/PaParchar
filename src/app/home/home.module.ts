@@ -5,14 +5,17 @@ import { FormsModule } from '@angular/forms';
 import { HomePage } from './home.page';
 
 import { HomePageRoutingModule } from './home-routing.module';
-
+import { RiveLoaderComponent } from '../features/riveAnimation/loader/loader.component';
+import { RivePreviewComponent } from '../features/riveAnimation/player/player.component';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    HomePageRoutingModule
+    HomePageRoutingModule,
+    RiveLoaderComponent,
+    RivePreviewComponent
   ],
   declarations: [HomePage]
 })
