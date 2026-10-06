@@ -1,0 +1,68 @@
+<div class="card-shell">
+  <div class="card-screen">
+    <section class="screen-content">
+      <button class="button-reload" (click)="closeModal()">
+        <img src="assets/Iconos/reload.png" alt="reload" class="button-icon" />
+      </button>
+      <div class="avatar-container">
+        <img
+          src="assets/Logo.png"
+          alt="Avatar"
+          class="avatar-image"
+        />
+      </div>
+      <input
+        id="player-name"
+        class="player-name-input"
+        type="text"
+        placeholder="Nombre del jugador"
+        autocomplete="off"
+      />
+      <fieldset class="gender-fieldset">
+        <legend>Quiero jugar con</legend>
+        <div class="radio-group">
+          <label class="radio-option gender-both" [class.selected]="gender === 'both'" for="gender-both">
+            <input
+              id="gender-both"
+              type="radio"
+              name="gender"
+              value="both"
+              [(ngModel)]="gender"
+            />
+            <img src="assets/Iconos/maleFemale.svg" alt="" />
+            <span class="option-label">Ambos</span>
+          </label>
+          <label class="radio-option gender-female" [class.selected]="gender === 'female'" for="gender-female">
+            <input
+              id="gender-female"
+              type="radio"
+              name="gender"
+              value="female"
+              [(ngModel)]="gender"
+            />
+            <img src="assets/Iconos/female.svg" alt="" />
+            <span class="option-label">Mujeres</span>
+          </label>
+          <label class="radio-option gender-male" [class.selected]="gender === 'male'" for="gender-male">
+            <input
+              id="gender-male"
+              type="radio"
+              name="gender"
+              value="male"
+              [(ngModel)]="gender"
+            />
+            <img src="assets/Iconos/male.svg" alt="" />
+            <span class="option-label">Hombres</span>
+          </label>
+        </div>
+      </fieldset>
+
+      <button class="button-add" type="button">Agregar jugador</button>
+      <button class="button-cancel" type="button" (click)="closeModal()">
+        Cancelar
+      </button>
+    </section>
+  </div>
+
+  
+</div>

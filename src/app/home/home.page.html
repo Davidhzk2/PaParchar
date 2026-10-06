@@ -6,7 +6,7 @@
     </div>
     <h1>¿Quiénes juegan hoy?</h1>
     <div class="cards-grid">
-      <button class="btn-add-card" (click)="onAddCard()"><span><img src="../../assets/Botones/btn_add-front.png" alt="logo-add" class="btn-image" ></span></button>
+      <button class="btn-add-card" (click)="openAddUserModal()" [disabled]="isAddUserModalOpen()"><span><img src="../../assets/Botones/btn_add-front.png" alt="logo-add" class="btn-image" ></span></button>
       @for (player of players; track $index) {
         <div class="card">
           <button class="btn-sm btn-remove-card" (click)="onRemoveCard($index)"><span><img src="../../assets/Iconos/close.png" alt="btn-remove" class="" ></span></button>
@@ -14,8 +14,7 @@
         </div>
       }
     </div>
-    @if(players.length > 1) {
-      <button class="btn-start">¡Estamos Listos!</button>
-    }
+      <button *ngIf="players.length > 1" class="btn-start" (click)="startGame()">¡Estamos Listos!</button>
+
   </div>
 </ion-content>

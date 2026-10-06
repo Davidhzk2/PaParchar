@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { Component, signal } from '@angular/core';
+import { NavController, ModalController } from '@ionic/angular/lazy';
+
+import { AddUserModalComponent } from '../features/add-user-modal/add-user-modal.component';
 
 @Component({
   selector: 'app-home',
@@ -10,8 +12,33 @@ import { NavController } from '@ionic/angular';
 
 export class HomePage {
   players: string[] = [];
+  isAddUserModalOpen = signal(false);
 
-  constructor(private navCtrl: NavController) {}
+  constructor(
+    private navCtrl: NavController,
+    private modalCtrl: ModalController
+  ) {}
+
+  async openAddUserModal() {
+    if (this.isAddUserModalOpen()) {
+      return;
+    }
+
+    this.isAddUserModalOpen.set(true);
+
+    try {
+      const addUserModal = await this.modalCtrl.create({
+        component: AddUserModalComponent,
+        cssClass: 'retro-tv-modal',
+      });
+      const dismissed = addUserModal.onDidDismiss();
+
+      await addUserModal.present();
+      await dismissed;
+    } finally {
+      this.isAddUserModalOpen.set(false);
+    }
+  }
 
   onAddCard() {
     this.players.push('Jugador');
