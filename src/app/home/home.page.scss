@@ -197,18 +197,11 @@ h1 {
         width: 100%;
         aspect-ratio: 1 / 1;
         border-radius: 50%;
-        background-color: #a34eb5;
 
-        &.gender-female {
-          background-color: #e44055;
-        }
-
-        &.gender-male {
-          background-color: #078fbe;
-        }
+        border: solid 3px #0091CF;
       }
 
-      .player{
+      .player {
         position: relative;
         z-index: 1;
         width: 100%;
@@ -220,20 +213,25 @@ h1 {
       .gender {
         position: absolute;
         z-index: 2;
-        right: -0.25rem;
-        bottom: -0.25rem;
-        display: grid;
-        width: 2rem;
-        height: 2rem;
-        place-items: center;
-        border: 2px solid #40204D;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: -20px;
+        padding: 0.4rem;
         border-radius: 50%;
-        background: #302536;
+        background-color: #0091CF;
+        border: 2px solid #004360;
 
-        img {
-          width: 1.5rem;
-          height: 1.5rem;
-          object-fit: contain;
+        svg {
+          display: block;
+          width: 18px;
+          height: 18px;
+          fill: #FFF;
+
+          path {
+            stroke: #004360;
+            stroke-width: 2px;
+            paint-order: stroke fill;
+          }
         }
       }
 
