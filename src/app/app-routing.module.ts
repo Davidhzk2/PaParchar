@@ -1,20 +1,16 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import {LoadingComponent} from './features/loading/loading.component';
 
 const routes: Routes = [
   {
-    path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
-  },
-  {
     path: '',
-    component: LoadingComponent,
+    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule),
     pathMatch: 'full'
   },
   {
-    path: 'loading',
-    component: LoadingComponent
+    path: 'home',
+    redirectTo: '',
+    pathMatch: 'full'
   }
 ];
 

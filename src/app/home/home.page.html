@@ -1,20 +1,74 @@
-
 <ion-content [fullscreen]="true" class="ion-content">
-  <div id="container">
-    <div class="logo">
-      <img src="../../assets/Logo.png" alt="Logo" class="logoHome"/>
+  <div class="imgLines">
+    <img src="assets/line_1.png" alt="line 1" class="line_1">
+    <img src="assets/line_2.png" alt="line 2" class="line_2">
+    <img src="assets/line_3.png" alt="line 3" class="line_3">
+    <img src="assets/line_4.png" alt="line 4" class="line_4">
+    <img src="assets/line_5.png" alt="line 5" class="line_5">
+  </div>
+
+  <rive-loader class="loader"></rive-loader>
+
+  <div class="container" [class.page--ready]="showContent">
+    <div class="logoHome" #logoWrapper>
+      <img src="assets/Logo.png" alt="Logo" (animationend)="onLogoAnimationEnd()" />
     </div>
-    <h1>¿Quiénes juegan hoy?</h1>
-    <div class="cards-grid">
-      <button class="btn-add-card" (click)="openAddUserModal()" [disabled]="isAddUserModalOpen()"><span><img src="../../assets/Botones/btn_add-front.png" alt="logo-add" class="btn-image" ></span></button>
-      @for (player of players; track $index) {
-        <div class="card">
-          <button class="btn-sm btn-remove-card" (click)="onRemoveCard($index)"><span><img src="../../assets/Iconos/close.png" alt="btn-remove" class="" ></span></button>
+
+    @if (showContent) {
+    <div class="content">
+      <h1>¿Quiénes juegan hoy?</h1>
+      <div class="playersWrapper">
+
+        <button class="playersCard add" (click)="openAddUserModal()">
+          <div class="btnIcon">
+            <img src="../../assets/Botones/btn_add-front.png" alt="logo-add">
+            <img src="../../assets/Botones/btn-add-back.png" alt="logo-add">
+          </div>
+        </button>
+
+        @for (player of players; track $index) {
+        <div class="playersCard">
+          <div class="playerInfo">
+            <div class="circle"></div>
+            <rive-player class="player"></rive-player>
+            <div class="gender">
+              <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#clip0_2664_10881)">
+                  <path
+                    d="M26.7468 5.58373C26.516 5.21133 26.0972 5.0484 25.6414 5.01349C24.7496 4.92912 18.9204 5.25788 18.0713 5.51681C17.2878 5.72628 16.6952 6.20342 16.7351 6.95694C16.812 7.71629 17.4417 8.13233 18.3391 8.17597C18.8149 8.19633 19.8719 8.1556 21.0486 8.08578C19.6269 9.0546 16.8462 11.129 15.8975 11.9756C13.6837 9.86049 10.9543 9.49973 8.53257 11.1406C6.88865 12.2549 5.56097 13.6339 4.79457 15.0246C3.72901 16.9593 3.73471 18.9377 4.81451 20.596C5.84588 22.1816 7.49551 23.3454 9.34456 23.7934C9.91723 23.9331 10.4899 24 11.0512 24C12.3902 24 13.678 23.6131 14.7863 22.8595C16.3961 21.7685 17.5271 20.4244 18.0628 18.9755C18.6611 17.3492 18.4958 15.6734 17.5841 14.1082C18.701 13.3983 21.4333 11.321 22.7125 10.2649C22.2737 11.4257 21.8977 12.4847 21.7666 12.9677C21.5358 13.855 21.7467 14.6173 22.4133 14.8995C23.1057 15.1672 23.7296 14.7366 24.1627 14.0383C24.6613 13.2906 26.7468 7.72211 26.9405 6.82893C27.0488 6.37507 27.0232 5.9183 26.7468 5.57791V5.58373ZM15.3932 17.9514C15.0769 18.8126 14.2991 19.6941 13.2079 20.436C12.2962 21.0557 11.1566 21.2419 9.99701 20.9626C8.84597 20.6833 7.8203 19.9647 7.18495 18.9872C6.8801 18.5188 6.561 17.7507 7.27613 16.4531C7.81745 15.4727 8.84882 14.4195 10.1053 13.567C10.6694 13.183 11.2079 13.0259 11.7093 13.0259C13.1965 13.0259 14.3704 14.4136 15.0228 15.4203C15.5841 16.2815 15.7037 17.1106 15.3932 17.9573V17.9514Z"
+                    fill="white" />
+                </g>
+                <defs>
+                  <clipPath id="clip0_2664_10881">
+                    <rect width="30" height="30" fill="white" />
+                  </clipPath>
+                </defs>
+              </svg>
+            </div>
+          </div>
+          <button class="btnClose" (click)="onRemoveCard($index)">
+            <svg viewBox="0 0 30 30" fill="none">
+              <g>
+                <path
+                  d="M22.0812 22.0475C21.0397 23.0891 19.5583 22.8655 18.1833 21.7892C17.5508 21.3061 16.3644 20.1904 14.9894 18.8941C13.429 20.4545 12.0573 21.7556 11.5385 22.1251C10.3476 23.0174 8.8662 23.0139 7.97838 22.1261C6.86666 21.0143 7.08708 19.6782 7.90469 18.6406C8.27421 18.1219 9.57526 16.6715 11.1357 15.0404C9.57617 13.4101 8.27983 12.0351 7.86737 11.5519C7.01499 10.4008 7.01543 8.84474 7.86836 7.99181C8.9807 6.87946 10.3559 7.13843 11.397 7.88081C11.9156 8.25003 13.3259 9.58959 14.9602 11.1452C16.4813 9.62408 17.8176 8.43701 18.301 8.10287C19.6373 7.21444 21.0481 6.91148 22.0891 7.9525C23.1301 8.99351 22.8704 10.4396 21.7933 11.8152C21.3098 12.448 20.1974 13.6311 18.8964 15.0107C20.3813 16.4956 21.607 17.792 21.9369 18.3499C22.8246 19.6857 23.4174 20.7113 22.4151 21.7136L22.0812 22.0475Z" />
+              </g>
+            </svg>
+          </button>
+
           <span class="box-name male">{{ player }}</span>
         </div>
+        }
+      </div>
+      @if(players.length > 1) {
+      <div class="footerBtn">
+        <button class="btnPrimary">
+          <h4>
+            ¡Estamos Listos!
+          </h4>
+        </button>
+      </div>
       }
     </div>
-      <button *ngIf="players.length > 1" class="btn-start" (click)="startGame()">¡Estamos Listos!</button>
-
+    }
   </div>
 </ion-content>
