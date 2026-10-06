@@ -31,7 +31,8 @@
           [class.female]="player.preferGender === 'female'">
           <div class="playerInfo">
             <div class="circle"></div>
-            <rive-player class="player"></rive-player>
+            <rive-player [isIdle]="chickenIdle" class="player"></rive-player>
+            <button (click)="chickenIdle = !chickenIdle" class="btnPruebaBorrar">Cambiar estado</button>
             <!--<img class="player" [src]="player.avatar" [alt]="'Avatar de ' + player.name">-->
             <div class="gender" [innerHTML]="getGenderIcon(player.preferGender)">
             </div>

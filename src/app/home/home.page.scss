@@ -278,6 +278,17 @@ h1 {
   }
 }
 
+.btnPruebaBorrar{
+  position: absolute;
+  z-index: 999;
+  background-color: yellow;
+  font-size: 2rem;
+  width: max-content;
+  padding: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
 .btnIcon {
   position: relative;
   width: 2.5rem;

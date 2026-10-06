@@ -41,6 +41,8 @@ export class HomePage {
   isAddUserModalOpen = signal(false);
   showContent = false;
 
+  chickenIdle = false; 
+
   // Se sanitizan una sola vez, no en cada ciclo de detección de cambios
   private readonly genderIcons: Record<string, SafeHtml>;
 
