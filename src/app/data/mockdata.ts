@@ -1,4 +1,6 @@
-export const mockAvatars = [
+import { Avatar } from '../core/models/player.model';
+
+export const mockAvatars: Avatar[] = [
   {
     src: 'assets/Rive/paparchar.riv',
     artboard: 'Chicken',

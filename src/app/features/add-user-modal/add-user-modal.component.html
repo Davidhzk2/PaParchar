@@ -41,20 +41,34 @@
       </fieldset>
 
       <div class="avatar-selector">
-        <button class="arrow-button left" >
-          <div class="btnIcon">
+        <button
+          class="arrow-button left"
+          type="button"
+          aria-label="Avatar anterior"
+          (click)="changeAvatar(-1)"
+        >&#8203;
+          <!-- <div class="btnIcon">
             <img src="../../assets/Botones/btn-add-front.png" alt="arrow-left">
-          </div></button>
-        <rive-player 
-        artboard="Alien" 
-        stateMachine="AlienMachine" 
-        [gender]="gender" 
-        size="large"
+          </div> -->
+        </button>
+        <rive-player
+          [src]="selectedAvatar.src"
+          [artboard]="selectedAvatar.artboard"
+          [stateMachine]="selectedAvatar.stateMachine"
+          [gender]="gender"
+          size="large"
         ></rive-player>
-        <button class="arrow-button right" >
-          <div class="btnIcon">
+        <button
+          class="arrow-button right"
+          type="button"
+          aria-label="Siguiente avatar"
+          (click)="changeAvatar(1)"
+        >
+        &#8203;
+          <!-- <div class="btnIcon">
             <img src="../../assets/Botones/btn-add-front.png" alt="arrow-right">
-          </div></button>
+          </div> -->
+        </button>
       </div>
      
 

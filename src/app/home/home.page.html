@@ -31,8 +31,11 @@
           [class.female]="player.gender === 'female'">
           <div class="playerInfo">
             <rive-player
+              [src]="player.avatar.src"
+              [artboard]="player.avatar.artboard"
+              [stateMachine]="player.avatar.stateMachine"
               [isIdle]="chickenIdle"
-              [gender]="player.gender === 'female' ? 'female' : 'male'"
+              [gender]="player.gender"
               [showGender]="true"
               size="medium"
               class="player"

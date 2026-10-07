@@ -67,9 +67,9 @@ export class HomePage {
       });
       const dismissed = addUserModal.onDidDismiss<{
         name: string;
-        gender: string;
-        avatar: string;
-        preferGender: string;
+        gender: Player['gender'];
+        avatar: Player['avatar'];
+        preferGender: Player['preferGender'];
       }>();
 
       await addUserModal.present();

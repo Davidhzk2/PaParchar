@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ModalController } from '@ionic/angular/lazy';
 import { Avatar, Gender } from '../../core/models/player.model';
 import {mockAvatars} from '../../data/mockdata';
@@ -9,21 +9,25 @@ import {mockAvatars} from '../../data/mockdata';
   styleUrls: ['./add-user-modal.component.scss'],
   standalone: false,
 })
-export class AddUserModalComponent implements OnInit {
+export class AddUserModalComponent {
   avatars: Avatar[] = mockAvatars;
+  selectedAvatar: Avatar = this.avatars[Math.floor(Math.random() * this.avatars.length)];
 
-  playerName: string = '';
+  playerName = '';
   gender: Gender = 'male';
   genderPreference = 'female';
-  avatar = 'assets/Logo.png';
 
   constructor(private modalCtrl: ModalController) {}
-
-  ngOnInit() {}
 
   onGenderChange(gender: Gender) {
     this.gender = gender;
     this.genderPreference = gender === 'male' ? 'female' : 'male';
+  }
+
+  changeAvatar(direction: -1 | 1): void {
+    const currentIndex = this.avatars.indexOf(this.selectedAvatar);
+    const nextIndex = (currentIndex + direction + this.avatars.length) % this.avatars.length;
+    this.selectedAvatar = this.avatars[nextIndex];
   }
 
   addPlayer() {
@@ -32,7 +36,7 @@ export class AddUserModalComponent implements OnInit {
     this.modalCtrl.dismiss(
       {
         name: this.playerName.trim(),
-        avatar: this.avatar,
+        avatar: this.selectedAvatar,
         gender: this.gender,
         preferGender: this.genderPreference,
       },

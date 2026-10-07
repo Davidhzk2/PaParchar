@@ -2,15 +2,15 @@ export type Gender = 'male' | 'female';
 
 export interface Player {
   name: string;
-  gender: string;
-  avatar: string;
-  preferGender: string;
+  gender: Gender;
+  avatar: Avatar;
+  preferGender: Gender | 'both';
 }
 
-export interface Avatar{
+export interface Avatar {
   src: string;
   artboard: string;
   stateMachine: string;
-  gender: string;
+  gender: Gender;
   stateBool?: boolean;
 }
