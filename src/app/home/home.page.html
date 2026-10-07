@@ -27,17 +27,14 @@
         </button>
 
         @for (player of players(); track $index) {
-        <div class="playersCard">
+        <div class="playersCard" [class.male]="player.preferGender !== 'female'"
+          [class.female]="player.preferGender === 'female'">
           <div class="playerInfo">
-            <div
-              class="circle"
-              [class.gender-both]="player.gender === 'both'"
-              [class.gender-female]="player.gender === 'female'"
-              [class.gender-male]="player.gender === 'male'"
-            ></div>
-            <img class="player" [src]="player.avatar" [alt]="'Avatar de ' + player.name">
-            <div class="gender">
-              <img [src]="getGenderIcon(player.gender)" alt="">
+            <div class="circle"></div>
+            <rive-player [isIdle]="chickenIdle" class="player"></rive-player>
+            <button (click)="chickenIdle = !chickenIdle" class="btnPruebaBorrar">Cambiar estado</button>
+            <!--<img class="player" [src]="player.avatar" [alt]="'Avatar de ' + player.name">-->
+            <div class="gender" [innerHTML]="getGenderIcon(player.preferGender)">
             </div>
           </div>
           <button class="btnClose" (click)="onRemoveCard($index)">
@@ -49,11 +46,11 @@
             </svg>
           </button>
 
-          <span
-            class="box-name"
-            [class.male]="player.gender === 'male'"
-            [class.female]="player.gender === 'female'"
-          >{{ player.name }}</span>
+          <span class="playerName">
+            <h3>
+              {{ player.name }}
+            </h3>
+          </span>
         </div>
         }
       </div>
