@@ -43,7 +43,7 @@ export class HomePage {
   chickenIdle = false; 
 
   // Se sanitizan una sola vez, no en cada ciclo de detección de cambios
-  private readonly genderIcons: Record<string, SafeHtml>;
+  // private readonly genderIcons: Record<string, SafeHtml>;
 
   constructor(
     private navCtrl: NavController,
