@@ -57,6 +57,7 @@ h6 {
 	line-height: 1;
 	margin: 0;
 	font-family: 'Boogaloo', sans-serif;
+	font-weight: 300;
 	-webkit-text-stroke: 0.6rem #40204D;
 	paint-order: stroke fill;
 	stroke-linejoin: round;
@@ -72,4 +73,44 @@ button{
 	background-color: transparent;
 	border: none;
 	outline: none;
+}
+
+.addModal{
+	--background: rgba(0, 0, 0, 0.3);
+
+	.ion-page{
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+}
+
+.btnPrimary {
+  position: relative;
+
+  background-color: #FDB44D;
+  border: 5px solid #40204D;
+  paint-order: stroke fill;
+  box-shadow: inset 0 -6px 0 #D2953F;
+
+  width: 63%;
+  max-width: 226px;
+  height: 4rem;
+  border-radius: 3rem 3rem 6rem 6rem;
+  color: #FFF;
+  font-family: inherit;
+
+  margin: 0 auto;
+
+  transform: scale(0);
+  animation: btnBounce 0.3s cubic-bezier(0, 0.005, 0.32, 1.63) forwards;
+
+  h4 {
+    width: max-content;
+    font-size: 3rem;
+    position: absolute;
+    top: -0.2rem;
+    left: 50%;
+    transform: translateX(-50%);
+  }
 }

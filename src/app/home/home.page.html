@@ -27,14 +27,14 @@
         </button>
 
         @for (player of players(); track $index) {
-        <div class="playersCard" [class.male]="player.preferGender !== 'female'"
-          [class.female]="player.preferGender === 'female'">
+        <div class="playersCard" [class.male]="player.gender !== 'female'"
+          [class.female]="player.gender === 'female'">
           <div class="playerInfo">
             <div class="circle"></div>
             <rive-player [isIdle]="chickenIdle" class="player"></rive-player>
             <button (click)="chickenIdle = !chickenIdle" class="btnPruebaBorrar">Cambiar estado</button>
             <!--<img class="player" [src]="player.avatar" [alt]="'Avatar de ' + player.name">-->
-            <div class="gender" [innerHTML]="getGenderIcon(player.preferGender)">
+            <div class="gender" [innerHTML]="getGenderIcon(player.gender)">
             </div>
           </div>
           <button class="btnClose" (click)="onRemoveCard($index)">
