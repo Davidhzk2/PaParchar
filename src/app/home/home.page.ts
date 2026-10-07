@@ -1,6 +1,6 @@
 
 import { AddUserModalComponent } from '../features/add-user-modal/add-user-modal.component';
-import { ChangeDetectorRef, Component, ElementRef, ViewChild, signal } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, NgZone, ViewChild, signal } from '@angular/core';
 import { NavController, ModalController } from '@ionic/angular/lazy';
 import { Player } from '../core/models/player.model';
 
@@ -13,13 +13,14 @@ import { Player } from '../core/models/player.model';
 export class HomePage {
   @ViewChild('logoWrapper') logoWrapper!: ElementRef<HTMLElement>;
 
-  players: Player[] = [];
+  players = signal<Player[]>([]);
   isAddUserModalOpen = signal(false);
 
   constructor(
     private navCtrl: NavController,
     private modalCtrl: ModalController,
     private cdr: ChangeDetectorRef,
+    private ngZone: NgZone,
 
   ) {}
 
@@ -37,6 +38,7 @@ export class HomePage {
       });
       const dismissed = addUserModal.onDidDismiss<{
         name: string;
+        gender: string;
         avatar: string;
         preferGender: string;
       }>();
@@ -44,8 +46,10 @@ export class HomePage {
       await addUserModal.present();
       const { data, role } = await dismissed;
       if (role === 'confirm' && data) {
-        this.players = [...this.players, data];
-        this.cdr.detectChanges();
+        this.ngZone.run(() => {
+          this.players.update(players => [...players, data]);
+          this.cdr.detectChanges();
+        });
       }
     } finally {
       this.isAddUserModalOpen.set(false);
@@ -84,15 +88,17 @@ export class HomePage {
     }, { once: true });
   }
 
-  onRemoveCard(index: number) { this.players.splice(index, 1); }
-  getGenderIcon(preferGender: string): string {
+  onRemoveCard(index: number) {
+    this.players.update(players => players.filter((_, playerIndex) => playerIndex !== index));
+  }
+  getGenderIcon(gender: string): string {
     const icons: Record<string, string> = {
       both: 'assets/Iconos/maleFemale.svg',
       female: 'assets/Iconos/female.svg',
       male: 'assets/Iconos/male.svg',
     };
 
-    return icons[preferGender] ?? icons['both'];
+    return icons[gender] ?? icons['both'];
   }
   startGame() { this.navCtrl.navigateRoot(['/intensity']); }
 }
