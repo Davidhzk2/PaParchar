@@ -1,3 +1,5 @@
+export type Gender = 'male' | 'female';
+
 export interface Player {
   name: string;
   gender: string;

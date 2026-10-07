@@ -209,18 +209,6 @@ h1 {
       width: 100%;
       aspect-ratio: 1 / 1;
 
-      .circle {
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-        bottom: -8px;
-        width: 100%;
-        aspect-ratio: 1 / 1;
-        border-radius: 50%;
-
-        border: solid 3px var(--bg);
-      }
-
       .player {
         position: relative;
         z-index: 1;
@@ -229,32 +217,6 @@ h1 {
         display: block;
         object-fit: contain;
       }
-
-      .gender {
-        position: absolute;
-        z-index: 2;
-        left: 50%;
-        transform: translateX(-50%);
-        bottom: -20px;
-        padding: 0.2rem;
-        border-radius: 50%;
-        background-color: var(--bg);
-        border: 2px solid var(--border);
-
-        &::ng-deep svg {
-          display: block;
-          width: 24px;
-          height: 24px;
-          fill: #FFF;
-
-          path {
-            stroke: var(--border);
-            stroke-width: 4px;
-            paint-order: stroke fill;
-          }
-        }
-      }
-
     }
 
     .playerName {

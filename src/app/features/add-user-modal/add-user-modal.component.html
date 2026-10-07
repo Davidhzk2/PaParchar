@@ -39,10 +39,22 @@
           </label>
         </div>
       </fieldset>
-      <div class="avatar-container">
-        <div class="circle"></div>
-        <rive-player class="player"></rive-player>
-        <!-- <img src="assets/Logo.png" alt="Avatar" class="avatar-image" /> -->
+
+      <div class="avatar-selector">
+        <button class="arrow-button left" >
+          <div class="btnIcon">
+            <img src="../../assets/Botones/btn-add-front.png" alt="arrow-left">
+          </div></button>
+        <rive-player 
+        artboard="Alien" 
+        stateMachine="AlienMachine" 
+        [gender]="gender" 
+        size="large"
+        ></rive-player>
+        <button class="arrow-button right" >
+          <div class="btnIcon">
+            <img src="../../assets/Botones/btn-add-front.png" alt="arrow-right">
+          </div></button>
       </div>
      
 

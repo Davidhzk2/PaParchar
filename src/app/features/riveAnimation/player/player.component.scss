@@ -1,4 +1,110 @@
-canvas {
-    width: 100%;
-    aspect-ratio: 1 / 1;
+:host {
+  display: block;
+  position: relative;
+  width: 88px;
+  height: 88px;
+  aspect-ratio: 1 / 1;
+  flex: 0 0 auto;
+  margin-inline: auto;
+}
+
+:host(.size-large) {
+  width: 138px;
+  height: 138px;
+}
+
+:host(.size-medium) {
+  width: 88px;
+  height: 88px;
+}
+
+:host(.size-small) {
+  width: 50px;
+  height: 50px;
+}
+
+.avatar-stage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1 / 1;
+}
+
+.circle {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  border: 3px solid;
+  border-radius: 50%;
+
+  &.gender-male {
+    border-color: #0091cf;
+  }
+
+  &.gender-female {
+    border-color: #ff465b;
+  }
+}
+
+.player {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+:host(.size-large) .circle {
+  border-width: 4px;
+}
+
+:host(.size-small) .circle {
+  border-width: 2px;
+}
+
+.gender {
+  position: absolute;
+  z-index: 2;
+  top: 100%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 0.2rem;
+  border: 2px solid;
+  border-radius: 50%;
+  box-sizing: border-box;
+
+  &.gender-male {
+    background-color: #0091cf;
+    border-color: #002b3e;
+  }
+
+  &.gender-female {
+    background-color: #ff465b;
+    border-color: #41091f;
+  }
+
+  img {
+    display: block;
+    width: 24px;
+    height: 24px;
+  }
+}
+
+:host(.size-large) .gender img {
+  width: 30px;
+  height: 30px;
+}
+
+:host(.size-small) .gender {
+  padding: 0.1rem;
+
+  img {
+    width: 16px;
+    height: 16px;
+  }
 }

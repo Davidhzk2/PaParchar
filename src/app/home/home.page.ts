@@ -118,15 +118,5 @@ export class HomePage {
   onRemoveCard(index: number) {
     this.players.update(players => players.filter((_, playerIndex) => playerIndex !== index));
   }
-  getGenderIcon(gender: string): string {
-    const icons: Record<string, string> = {
-      both: 'assets/Iconos/maleFemale.svg',
-      female: 'assets/Iconos/female.svg',
-      male: 'assets/Iconos/male.svg',
-    };
-
-    return icons[gender] ?? icons['both'];
-  }
-
   startGame() { this.navCtrl.navigateRoot(['/intensity']); }
 }

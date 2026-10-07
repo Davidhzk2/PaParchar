@@ -1,0 +1,17 @@
+<div class="avatar-stage">
+  <div
+    class="circle"
+    [class.gender-male]="gender === 'male'"
+    [class.gender-female]="gender === 'female'"
+  ></div>
+  <canvas #riveCanvas class="player"></canvas>
+  @if (showGender) {
+    <div
+      class="gender"
+      [class.gender-male]="gender === 'male'"
+      [class.gender-female]="gender === 'female'"
+    >
+      <img [src]="genderIcon" alt="" />
+    </div>
+  }
+</div>

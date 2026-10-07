@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular/lazy';
-import { Avatar } from '../../core/models/player.model';
+import { Avatar, Gender } from '../../core/models/player.model';
 import {mockAvatars} from '../../data/mockdata';
 
 @Component({
@@ -13,7 +13,7 @@ export class AddUserModalComponent implements OnInit {
   avatars: Avatar[] = mockAvatars;
 
   playerName: string = '';
-  gender: string = 'male';
+  gender: Gender = 'male';
   genderPreference = 'female';
   avatar = 'assets/Logo.png';
 
@@ -21,7 +21,7 @@ export class AddUserModalComponent implements OnInit {
 
   ngOnInit() {}
 
-  onGenderChange(gender: string) {
+  onGenderChange(gender: Gender) {
     this.gender = gender;
     this.genderPreference = gender === 'male' ? 'female' : 'male';
   }

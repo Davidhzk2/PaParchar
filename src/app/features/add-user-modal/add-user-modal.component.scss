@@ -39,62 +39,30 @@
   align-items: center;
   justify-content: space-between;
   text-align: center;
+  gap:5px;
 }
 
-.button-reload {
-  top: 10px;
-  right: 10px;
-  width: 38px;
-  height: 38px;
-  padding: 4px;
-  cursor: pointer;
-
-  .button-icon {
-    display: block;
-    width: 100%;
-    height: auto;
-    object-fit: contain;
-    filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg)
-      brightness(103%) contrast(103%);
-  }
-}
-
-.avatar-container {
+.avatar-selector {
   display: flex;
-  position: relative;
-  max-width: 50%;
-  min-height: 150px;
-  flex-direction: column;
-  align-items: center;
+  width: 100%;
+  flex: 0 0 auto;
   justify-content: center;
-  gap: 10px;
-  border: 2px dotted #ff0d00;
-  margin-top:5px;
+  align-items: center;
+  padding: 10px 0;
+  border:2px dotted tomato;
 
-  .circle {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: 9px;
-    width: 100%;
-    aspect-ratio: 1 / 1;
+
+  .arrow-button{
+    background-color: #FDB44D;
+    width: 30px;
+    height: 30px;
+    border: 2px solid #40204D;
     border-radius: 50%;
-    border: solid 4px #0091cf;
-    // border: solid 3px var(--bg);
-  }
-
-  .player {
-    position: relative;
-    z-index: 1;
-    width: 100%;
-    height: 100%;
-    display: block;
-    object-fit: contain;
   }
 }
 
 .player-name-input {
-  width: 65%;
+  width: 70%;
   padding: 9px 5px;
   border: 0;
   border-bottom: 2px solid #242424;
