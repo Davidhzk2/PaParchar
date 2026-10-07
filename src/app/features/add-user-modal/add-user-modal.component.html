@@ -1,16 +1,49 @@
 <div class="card-shell">
   <div class="card-screen">
     <section class="screen-content">
-      <button class="button-reload" (click)="closeModal()">
-        <img src="assets/Iconos/reload.png" alt="reload" class="button-icon" />
-      </button>
+      
+      <fieldset class="gender-fieldset">
+        <legend>Selecciona el género</legend>
+        <div class="radio-group">
+          <label
+            class="radio-option gender-option player-gender-male"
+            [class.selected]="gender === 'male'"
+            for="player-gender-male"
+          >
+            <input
+              id="player-gender-male"
+              type="radio"
+              name="playerGender"
+              value="male"
+              [ngModel]="gender"
+              (ngModelChange)="onGenderChange($event)"
+            />
+            <img src="assets/Iconos/male.svg" alt="" />
+            <span class="option-label">Hombre</span>
+          </label>
+          <label
+            class="radio-option gender-option player-gender-female"
+            [class.selected]="gender === 'female'"
+            for="player-gender-female"
+          >
+            <input
+              id="player-gender-female"
+              type="radio"
+              name="playerGender"
+              value="female"
+              [ngModel]="gender"
+              (ngModelChange)="onGenderChange($event)"
+            />
+            <img src="assets/Iconos/female.svg" alt="" />
+            <span class="option-label">Mujer</span>
+          </label>
+        </div>
+      </fieldset>
       <div class="avatar-container">
-        <img
-          src="assets/Logo.png"
-          alt="Avatar"
-          class="avatar-image"
-        />
+        <img src="assets/Logo.png" alt="Avatar" class="avatar-image" />
       </div>
+     
+
       <input
         id="player-name"
         class="player-name-input"
@@ -19,38 +52,50 @@
         autocomplete="off"
         [(ngModel)]="playerName"
       />
-      <fieldset class="gender-fieldset">
+      <fieldset class="gender-pref-fieldset">
         <legend>Quiero jugar con</legend>
         <div class="radio-group">
-          <label class="radio-option gender-both" [class.selected]="gender === 'both'" for="gender-both">
+          <label
+            class="radio-option pref-option preference-both"
+            [class.selected]="genderPreference === 'both'"
+            for="gender-preference-both"
+          >
             <input
-              id="gender-both"
+              id="gender-preference-both"
               type="radio"
-              name="gender"
+              name="genderPreference"
               value="both"
-              [(ngModel)]="gender"
+              [(ngModel)]="genderPreference"
             />
             <img src="assets/Iconos/maleFemale.svg" alt="" />
             <span class="option-label">Ambos</span>
           </label>
-          <label class="radio-option gender-female" [class.selected]="gender === 'female'" for="gender-female">
+          <label
+            class="radio-option pref-option preference-female"
+            [class.selected]="genderPreference === 'female'"
+            for="gender-preference-female"
+          >
             <input
-              id="gender-female"
+              id="gender-preference-female"
               type="radio"
-              name="gender"
+              name="genderPreference"
               value="female"
-              [(ngModel)]="gender"
+              [(ngModel)]="genderPreference"
             />
             <img src="assets/Iconos/female.svg" alt="" />
             <span class="option-label">Mujeres</span>
           </label>
-          <label class="radio-option gender-male" [class.selected]="gender === 'male'" for="gender-male">
+          <label
+            class="radio-option pref-option preference-male"
+            [class.selected]="genderPreference === 'male'"
+            for="gender-preference-male"
+          >
             <input
-              id="gender-male"
+              id="gender-preference-male"
               type="radio"
-              name="gender"
+              name="genderPreference"
               value="male"
-              [(ngModel)]="gender"
+              [(ngModel)]="genderPreference"
             />
             <img src="assets/Iconos/male.svg" alt="" />
             <span class="option-label">Hombres</span>
@@ -58,12 +103,12 @@
         </div>
       </fieldset>
 
-      <button class="button-add" type="button"  (click)="addPlayer()">Agregar jugador</button>
+      <button class="button-add" type="button" (click)="addPlayer()">
+        Agregar jugador
+      </button>
       <button class="button-cancel" type="button" (click)="closeModal()">
         Cancelar
       </button>
     </section>
   </div>
-
-  
 </div>

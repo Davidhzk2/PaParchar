@@ -9,12 +9,18 @@ import { ModalController } from '@ionic/angular/lazy';
 })
 export class AddUserModalComponent  implements OnInit {
   playerName:string = '';
-  gender = 'both';
+  gender:string= 'male';
+  genderPreference = 'female';
   avatar = 'assets/Logo.png';
 
   constructor(private modalCtrl: ModalController) { }
 
   ngOnInit() {}
+
+  onGenderChange(gender: string) {
+    this.gender = gender;
+    this.genderPreference = gender === 'male' ? 'female' : 'male';
+  }
 
   addPlayer(){
     if(!this.playerName.trim()) return;
@@ -22,7 +28,8 @@ export class AddUserModalComponent  implements OnInit {
     this.modalCtrl.dismiss({
       name: this.playerName.trim(),
       avatar: this.avatar,
-      preferGender: this.gender,
+      gender: this.gender,
+      preferGender: this.genderPreference,
     }, 'confirm');
 
   }
