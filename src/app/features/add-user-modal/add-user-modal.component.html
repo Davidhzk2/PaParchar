@@ -1,142 +1,118 @@
-<div class="card-shell">
-  <div class="card-screen">
-    <section class="screen-content">
-      
-      <fieldset class="gender-fieldset">
-        <legend>Selecciona el género</legend>
-        <div class="radio-group">
-          <label
-            class="radio-option gender-option player-gender-male"
-            [class.selected]="gender === 'male'"
-            for="player-gender-male"
-          >
-            <input
-              id="player-gender-male"
-              type="radio"
-              name="playerGender"
-              value="male"
-              [ngModel]="gender"
-              (ngModelChange)="onGenderChange($event)"
-            />
-            <img src="assets/Iconos/male.svg" alt="" />
-            <span class="option-label">Hombre</span>
-          </label>
-          <label
-            class="radio-option gender-option player-gender-female"
-            [class.selected]="gender === 'female'"
-            for="player-gender-female"
-          >
-            <input
-              id="player-gender-female"
-              type="radio"
-              name="playerGender"
-              value="female"
-              [ngModel]="gender"
-              (ngModelChange)="onGenderChange($event)"
-            />
-            <img src="assets/Iconos/female.svg" alt="" />
-            <span class="option-label">Mujer</span>
-          </label>
-        </div>
-      </fieldset>
+<div class="modalAdd__content" [class.male]="gender === 'male'" [class.female]="gender === 'female'">
 
-      <div class="avatar-selector">
-        <button
-          class="arrow-button left"
-          type="button"
-          aria-label="Avatar anterior"
-          (click)="changeAvatar(-1)"
-        >&#8203;
-          <!-- <div class="btnIcon">
+  <div class="modalAdd__playerInfo">
+
+    <fieldset class="genderSelect player">
+      <legend>Selecciona el género del jugador</legend>
+
+      <div class="genderContainerInput">
+
+        <label class="genderButton male" [class.selected]="gender === 'male'" for="player-gender-male">
+          <input id="player-gender-male" type="radio" name="playerGender" value="male" [ngModel]="gender"
+            (ngModelChange)="onGenderChange($event)" />
+          <svg viewBox="3 4 25 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g>
+              <path
+                d="M26.7468 5.58373C26.516 5.21133 26.0972 5.0484 25.6414 5.01349C24.7496 4.92912 18.9204 5.25788 18.0713 5.51681C17.2878 5.72628 16.6952 6.20342 16.7351 6.95694C16.812 7.71629 17.4417 8.13233 18.3391 8.17597C18.8149 8.19633 19.8719 8.1556 21.0486 8.08578C19.6269 9.0546 16.8462 11.129 15.8975 11.9756C13.6837 9.86049 10.9543 9.49973 8.53257 11.1406C6.88865 12.2549 5.56097 13.6339 4.79457 15.0246C3.72901 16.9593 3.73471 18.9377 4.81451 20.596C5.84588 22.1816 7.49551 23.3454 9.34456 23.7934C9.91723 23.9331 10.4899 24 11.0512 24C12.3902 24 13.678 23.6131 14.7863 22.8595C16.3961 21.7685 17.5271 20.4244 18.0628 18.9755C18.6611 17.3492 18.4958 15.6734 17.5841 14.1082C18.701 13.3983 21.4333 11.321 22.7125 10.2649C22.2737 11.4257 21.8977 12.4847 21.7666 12.9677C21.5358 13.855 21.7467 14.6173 22.4133 14.8995C23.1057 15.1672 23.7296 14.7366 24.1627 14.0383C24.6613 13.2906 26.7468 7.72211 26.9405 6.82893C27.0488 6.37507 27.0232 5.9183 26.7468 5.57791V5.58373ZM15.3932 17.9514C15.0769 18.8126 14.2991 19.6941 13.2079 20.436C12.2962 21.0557 11.1566 21.2419 9.99701 20.9626C8.84597 20.6833 7.8203 19.9647 7.18495 18.9872C6.8801 18.5188 6.561 17.7507 7.27613 16.4531C7.81745 15.4727 8.84882 14.4195 10.1053 13.567C10.6694 13.183 11.2079 13.0259 11.7093 13.0259C13.1965 13.0259 14.3704 14.4136 15.0228 15.4203C15.5841 16.2815 15.7037 17.1106 15.3932 17.9573V17.9514Z" />
+            </g>
+          </svg>
+          <span class="option-label">Hombre</span>
+        </label>
+
+        <label class="genderButton female" [class.selected]="gender === 'female'" for="player-gender-female">
+          <input id="player-gender-female" type="radio" name="playerGender" value="female" [ngModel]="gender"
+            (ngModelChange)="onGenderChange($event)" />
+          <svg viewBox="0 -1 30 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g>
+              <path
+                d="M21.942 6.00736C19.4636 2.03796 15.8439 0.905194 12.7163 3.11392C11.0057 4.32241 9.62424 5.81804 8.82677 7.32629C7.71803 9.42458 7.72396 11.5702 8.84752 13.3687C9.9207 15.0884 11.6372 16.3505 13.5612 16.8364C13.7568 16.8869 13.9525 16.9248 14.1452 16.9563C14.1452 16.9627 14.1452 16.9658 14.1422 16.9721C14.0859 17.3003 14.0296 19.569 14.0296 20.7901C12.826 20.8185 11.7884 20.85 11.4534 20.91C10.7804 21.0299 10.1638 21.4748 10.1638 22.3709C10.1638 23.0556 10.7508 23.6835 11.5067 23.8003C11.8417 23.8287 12.8526 23.8602 14.0563 23.8886C14.0829 25.1697 14.1393 26.274 14.1956 26.6306C14.2786 27.3752 14.6996 28 15.5385 28C16.2115 28 16.7718 27.4036 16.8815 26.5706C16.9378 26.2141 16.9645 25.1413 16.9645 23.8886C17.9724 23.8602 18.8411 23.8287 19.262 23.7687C20.187 23.6488 20.8303 23.1439 20.8303 22.3078C20.8303 21.4716 20.2137 21.0551 19.3747 20.8784C19.0397 20.7901 18.0851 20.7585 16.9675 20.7585C16.9408 19.6857 16.9111 17.5085 16.8548 17.0605C16.8489 17.0037 16.837 16.95 16.8281 16.8932C17.679 16.7008 18.4883 16.3442 19.2235 15.8236C20.8985 14.6403 22.0754 13.1826 22.6327 11.6112C23.2968 9.73065 23.0567 7.79328 21.942 6.0042V6.00736ZM19.8579 10.5037C19.5288 11.4377 18.7195 12.3937 17.5841 13.1984C16.6354 13.8704 15.4496 14.0724 14.243 13.7695C13.0453 13.4666 11.9781 12.6872 11.317 11.627C10.9998 11.119 10.6678 10.286 11.4119 8.87871C11.9751 7.81536 13.0483 6.67313 14.3557 5.74862C14.9427 5.33212 15.503 5.16173 16.0247 5.16173C17.5722 5.16173 18.7936 6.66682 19.4725 7.75857C20.0565 8.69254 20.181 9.59181 19.8579 10.51V10.5037Z" />
+            </g>
+          </svg>
+          <span>Mujer</span>
+        </label>
+      </div>
+
+    </fieldset>
+
+
+    <div class="avatar-selector">
+      <button class="arrow-button left" type="button" aria-label="Avatar anterior" (click)="changeAvatar(-1)">&#8203;
+        <!-- <div class="btnIcon">
             <img src="../../assets/Botones/btn-add-front.png" alt="arrow-left">
           </div> -->
-        </button>
-        <rive-player
-          [src]="selectedAvatar.src"
-          [artboard]="selectedAvatar.artboard"
-          [stateMachine]="selectedAvatar.stateMachine"
-          [gender]="gender"
-          size="large"
-        ></rive-player>
-        <button
-          class="arrow-button right"
-          type="button"
-          aria-label="Siguiente avatar"
-          (click)="changeAvatar(1)"
-        >
+      </button>
+      <rive-player [src]="selectedAvatar.src" [artboard]="selectedAvatar.artboard"
+        [stateMachine]="selectedAvatar.stateMachine" [gender]="gender" size="large" [isIdle]="true"></rive-player>
+      <button class="arrow-button right" type="button" aria-label="Siguiente avatar" (click)="changeAvatar(1)">
         &#8203;
-          <!-- <div class="btnIcon">
+        <!-- <div class="btnIcon">
             <img src="../../assets/Botones/btn-add-front.png" alt="arrow-right">
           </div> -->
-        </button>
-      </div>
-     
-
-      <input
-        id="player-name"
-        class="player-name-input"
-        type="text"
-        placeholder="Nombre del jugador"
-        autocomplete="off"
-        [(ngModel)]="playerName"
-      />
-      <fieldset class="gender-pref-fieldset">
-        <legend>Quiero jugar con</legend>
-        <div class="radio-group">
-          <label
-            class="radio-option pref-option preference-both"
-            [class.selected]="genderPreference === 'both'"
-            for="gender-preference-both"
-          >
-            <input
-              id="gender-preference-both"
-              type="radio"
-              name="genderPreference"
-              value="both"
-              [(ngModel)]="genderPreference"
-            />
-            <img src="assets/Iconos/maleFemale.svg" alt="" />
-            <span class="option-label">Ambos</span>
-          </label>
-          <label
-            class="radio-option pref-option preference-female"
-            [class.selected]="genderPreference === 'female'"
-            for="gender-preference-female"
-          >
-            <input
-              id="gender-preference-female"
-              type="radio"
-              name="genderPreference"
-              value="female"
-              [(ngModel)]="genderPreference"
-            />
-            <img src="assets/Iconos/female.svg" alt="" />
-            <span class="option-label">Mujeres</span>
-          </label>
-          <label
-            class="radio-option pref-option preference-male"
-            [class.selected]="genderPreference === 'male'"
-            for="gender-preference-male"
-          >
-            <input
-              id="gender-preference-male"
-              type="radio"
-              name="genderPreference"
-              value="male"
-              [(ngModel)]="genderPreference"
-            />
-            <img src="assets/Iconos/male.svg" alt="" />
-            <span class="option-label">Hombres</span>
-          </label>
-        </div>
-      </fieldset>
-
-      <button class="button-add" type="button" (click)="addPlayer()">
-        Agregar jugador
       </button>
-      <button class="button-cancel" type="button" (click)="closeModal()">
+    </div>
+
+    <input id="player-name" class="namePlayer" type="text" placeholder="Nombre del jugador" autocomplete="off"
+      [(ngModel)]="playerName" />
+
+    <fieldset class="genderSelect prefer">
+      <legend>¿Con quiénes quiere jugar?</legend>
+      <div class="genderContainerInput">
+        <label class="genderButton both" [class.selected]="genderPreference === 'both'" for="gender-preference-both">
+          <input id="gender-preference-both" type="radio" name="genderPreference" value="both"
+            [(ngModel)]="genderPreference" />
+          <img src="assets/Iconos/maleFemale.svg" alt="" />
+          <span>Ambos</span>
+        </label>
+        <label class="genderButton female" [class.selected]="genderPreference === 'female'"
+          for="gender-preference-female">
+          <input id="gender-preference-female" type="radio" name="genderPreference" value="female"
+            [(ngModel)]="genderPreference" />
+          <img src="assets/Iconos/female.svg" alt="" />
+          <span>Mujeres</span>
+        </label>
+        <label class="genderButton male" [class.selected]="genderPreference === 'male'" for="gender-preference-male">
+          <input id="gender-preference-male" type="radio" name="genderPreference" value="male"
+            [(ngModel)]="genderPreference" />
+          <img src="assets/Iconos/male.svg" alt="" />
+          <span>Hombres</span>
+        </label>
+      </div>
+    </fieldset>
+
+    <div class="modalCta">
+      <button class="btnPrimary" type="button" (click)="addPlayer()">
+        <h4>
+          Agregar Jugador
+        </h4>
+      </button>
+      <button class="btnCancel" type="button" (click)="closeModal()">
         Cancelar
       </button>
-    </section>
+    </div>
+
   </div>
+
+  <div class="modalBase">
+
+    <svg viewBox="0 0 315 500" xmlns="http://www.w3.org/2000/svg" class="baseContent">
+      <path
+        d="M18.5185 18.5185C18.5185 18.5185 18.5185 0 157.407 0C296.296 0 296.296 18.5185 296.296 18.5185C296.296 18.5185 314.815 18.5185 314.815 250C314.815 481.481 296.296 481.481 296.296 481.481C296.296 481.481 296.296 500 157.407 500C18.5185 500 18.5185 481.481 18.5185 481.481C18.5185 481.481 0 481.481 0 250C0 18.5185 18.5185 18.5185 18.5185 18.5185Z" />
+    </svg>
+
+    <svg viewBox="0 0 315 500" xmlns="http://www.w3.org/2000/svg" class="baseGradient">
+      <path
+        d="M18.5185 18.5185C18.5185 18.5185 18.5185 0 157.407 0C296.296 0 296.296 18.5185 296.296 18.5185C296.296 18.5185 314.815 18.5185 314.815 250C314.815 481.481 296.296 481.481 296.296 481.481C296.296 481.481 296.296 500 157.407 500C18.5185 500 18.5185 481.481 18.5185 481.481C18.5185 481.481 0 481.481 0 250C0 18.5185 18.5185 18.5185 18.5185 18.5185Z" />
+    </svg>
+
+    <svg width="0" height="0" style="position: absolute" aria-hidden="true">
+      <defs>
+        <linearGradient id="gradDynamic" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" class="stop-a" />
+          <stop offset="100%" class="stop-b" />
+        </linearGradient>
+      </defs>
+    </svg>
+  </div>
+
+
 </div>
