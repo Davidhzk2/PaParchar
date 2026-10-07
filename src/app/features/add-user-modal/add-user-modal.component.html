@@ -30,10 +30,7 @@
           </svg>
           <span>Mujer</span>
         </label>
-
-        <div class="card-shell">
-          <div class="card-screen">
-            <section class="screen-content">
+      </div>
 
     </fieldset>
 
@@ -45,7 +42,7 @@
           </div> -->
       </button>
       <rive-player [src]="selectedAvatar.src" [artboard]="selectedAvatar.artboard"
-        [stateMachine]="selectedAvatar.stateMachine" [gender]="gender" size="large"></rive-player>
+        [stateMachine]="selectedAvatar.stateMachine" [gender]="gender" size="large" [isIdle]="true"></rive-player>
       <button class="arrow-button right" type="button" aria-label="Siguiente avatar" (click)="changeAvatar(1)">
         &#8203;
         <!-- <div class="btnIcon">
