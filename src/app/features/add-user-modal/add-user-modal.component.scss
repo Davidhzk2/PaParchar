@@ -13,7 +13,6 @@
   padding: 8px;
   border-radius: 19% 19% 13% 13% / 8% 8% 7% 7%;
   background: linear-gradient(to bottom, #08a0d3, #63327c);
-  
 }
 
 .card-screen {
@@ -55,27 +54,49 @@
     width: 100%;
     height: auto;
     object-fit: contain;
-    filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%);
+    filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg)
+      brightness(103%) contrast(103%);
   }
 }
 
 .avatar-container {
   display: flex;
+  position: relative;
   max-width: 50%;
   min-height: 150px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  border:2px dotted #ff0d00;
+  border: 2px dotted #ff0d00;
+  margin-top:5px;
+
+  .circle {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 9px;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    border: solid 4px #0091cf;
+    // border: solid 3px var(--bg);
+  }
+
+  .player {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: contain;
+  }
 }
 
 .player-name-input {
   width: 65%;
-  padding: 9px 11px;
-  border:0;
+  padding: 9px 5px;
+  border: 0;
   border-bottom: 2px solid #242424;
   outline: none;
   background: transparent;
@@ -88,14 +109,16 @@
   }
 }
 
-.gender-fieldset, .gender-pref-fieldset {
+.gender-fieldset,
+.gender-pref-fieldset {
   width: 100%;
   margin: 14px 0 0;
   padding: 0;
   border: 0;
 }
 
-.gender-fieldset legend, .gender-pref-fieldset legend {
+.gender-fieldset legend,
+.gender-pref-fieldset legend {
   margin: 0 auto 7px;
   color: #242424;
   font-size: 17px;
@@ -123,7 +146,7 @@
   background: transparent;
   cursor: pointer;
 
-  input[type='radio'] {
+  input[type="radio"] {
     position: absolute;
     width: 1px;
     height: 1px;
@@ -140,11 +163,13 @@
     height: 38px;
     flex: 0 0 38px;
     padding: 4px;
-    border: 2px solid #40204D;
+    border: 2px solid #40204d;
     border-radius: 50%;
     background: #302536;
     object-fit: contain;
-    transition: background-color 150ms ease, border-color 150ms ease;
+    transition:
+      background-color 150ms ease,
+      border-color 150ms ease;
   }
 
   &.selected {
@@ -181,7 +206,7 @@
   padding: 2px;
   border: 2px solid transparent;
   border-radius: 10px;
-  background: #F0F0F0;
+  background: #f0f0f0;
   box-shadow: inset 0 -3px 0 #d6d6d6;
   transition:
     min-width 150ms ease,
@@ -210,10 +235,10 @@
   }
 
   &.player-gender-male.selected {
-    border-color: #002B3E;
-    background: #0091CF;
+    border-color: #002b3e;
+    background: #0091cf;
     box-shadow: inset 0 -3px 0 #056788;
-    border-radius:16px 8px 24px 12px; 
+    border-radius: 16px 8px 24px 12px;
 
     .option-label {
       color: #fff;
@@ -222,10 +247,9 @@
 
   &.player-gender-female.selected {
     border-color: #912733;
-    background: #D4394B;
+    background: #d4394b;
     box-shadow: inset 0 -3px 0 #9f2637;
-    border-radius:20px 12px 8px 8px; 
-
+    border-radius: 20px 12px 8px 8px;
 
     .option-label {
       color: #fff;
@@ -271,7 +295,7 @@
   padding: 2px;
   border: 2px solid transparent;
   border-radius: 10px;
-  background: #F0F0F0;
+  background: #f0f0f0;
   box-shadow: inset 0 -3px 0 #d6d6d6;
   transition:
     min-width 150ms ease,
@@ -301,19 +325,19 @@
 
   &.preference-both.selected {
     border-color: #40204d;
-    background: #944AB3;
+    background: #944ab3;
     box-shadow: inset 0 -3px 0 #63327c;
   }
 
   &.preference-female.selected {
     border-color: #912733;
-    background: #D4394B;
+    background: #d4394b;
     box-shadow: inset 0 -3px 0 #9f2637;
   }
 
   &.preference-male.selected {
-    border-color: #002B3E;
-    background: #0091CF;
+    border-color: #002b3e;
+    background: #0091cf;
     box-shadow: inset 0 -3px 0 #056788;
   }
 
@@ -383,7 +407,6 @@
   color: #242424;
   font-size: 16px;
 }
-
 
 @media (max-height: 480px) {
   .card-shell {

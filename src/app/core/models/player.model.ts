@@ -4,3 +4,11 @@ export interface Player {
   avatar: string;
   preferGender: string;
 }
+
+export interface Avatar{
+  src: string;
+  artboard: string;
+  stateMachine: string;
+  gender: string;
+  stateBool?: boolean;
+}
