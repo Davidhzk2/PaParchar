@@ -1,22 +1,48 @@
-import { AfterViewInit, Component, ElementRef, Input, OnDestroy, ViewChild } from '@angular/core';
-import { Rive } from '@rive-app/webgl2';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  Input,
+  OnChanges,
+  OnDestroy,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
+import { Alignment, Fit, Layout, Rive } from '@rive-app/webgl2';
+import { Gender } from '../../../core/models/player.model';
 
 const BOOLEAN_PROP = 'stateBoolean';
+
+type AvatarSize = 'large' | 'medium' | 'small';
 
 @Component({
   selector: 'rive-player',
   standalone: true,
-  template: `<canvas #riveCanvas></canvas>`,
+  host: {
+    '[class.size-large]': 'size === "large"',
+    '[class.size-medium]': 'size === "medium"',
+    '[class.size-small]': 'size === "small"',
+  },
+  templateUrl: './player.component.html',
   styleUrls: ['./player.component.scss'],
 })
-export class RivePreviewComponent implements AfterViewInit, OnDestroy {
+export class RivePreviewComponent implements AfterViewInit, OnChanges, OnDestroy {
   @ViewChild('riveCanvas') canvas!: ElementRef<HTMLCanvasElement>;
+
+  @Input() src = 'assets/Rive/paparchar.riv';
+  @Input() artboard = 'Chicken';
+  @Input() stateMachine = 'ChickenMachine';
+  @Input() gender: Gender = 'male';
+  @Input() showGender = false;
+  @Input() size: AvatarSize = 'medium';
 
   private rive?: Rive;
   private boolProp?: { value: boolean };
   private _isIdle = false;
+  private viewInitialized = false;
+  private riveGeneration = 0;
+  private resizeObserver?: ResizeObserver;
 
-  // true -> Iddle, false -> Def
   @Input()
   set isIdle(value: boolean) {
     this._isIdle = value;
@@ -26,24 +52,30 @@ export class RivePreviewComponent implements AfterViewInit, OnDestroy {
     return this._isIdle;
   }
 
+  get genderIcon(): string {
+    return this.gender === 'female'
+      ? 'assets/Iconos/female.svg'
+      : 'assets/Iconos/male.svg';
+  }
+
   ngAfterViewInit(): void {
-    this.rive = new Rive({
-      src: 'assets/Rive/paparchar.riv',
-      canvas: this.canvas.nativeElement,
-      artboard: 'Chicken',
-      stateMachine: 'ChickenMachine',   // singular, como pide el aviso
-      autoBind: true,                   // enlaza el View Model por defecto del artboard
-      autoplay: true,
-      onLoad: () => {
+    this.viewInitialized = true;
+    this.resizeObserver = new ResizeObserver(([entry]) => {
+      if (entry.contentRect.width > 0 && entry.contentRect.height > 0) {
         this.rive?.resizeDrawingSurfaceToCanvas();
-
-        const vmi = this.rive?.viewModelInstance;
-        console.log('Propiedades del View Model:', vmi?.properties);
-
-        this.boolProp = vmi?.boolean(BOOLEAN_PROP) ?? undefined;
-        this.applyState();
-      },
+      }
     });
+    this.resizeObserver.observe(this.canvas.nativeElement);
+    this.createRive();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (
+      this.viewInitialized &&
+      (changes['src'] || changes['artboard'] || changes['stateMachine'])
+    ) {
+      this.createRive();
+    }
   }
 
   toggle(): void {
@@ -56,7 +88,39 @@ export class RivePreviewComponent implements AfterViewInit, OnDestroy {
     }
   }
 
+  private createRive(): void {
+    const generation = ++this.riveGeneration;
+    this.rive?.cleanup();
+    this.boolProp = undefined;
+
+    this.rive = new Rive({
+      src: this.src,
+      canvas: this.canvas.nativeElement,
+      artboard: this.artboard,
+      stateMachine: this.stateMachine,
+      layout: new Layout({ fit: Fit.Contain, alignment: Alignment.Center }),
+      autoBind: true,
+      autoplay: true,
+      onLoad: () => {
+        if (generation !== this.riveGeneration) {
+          return;
+        }
+
+        this.rive?.resizeDrawingSurfaceToCanvas();
+        this.boolProp = this.rive?.viewModelInstance?.boolean(BOOLEAN_PROP) ?? undefined;
+        this.applyState();
+      },
+      onLoadError: (error) => {
+        if (generation === this.riveGeneration) {
+          console.error('Error al cargar el avatar Rive:', error);
+        }
+      },
+    });
+  }
+
   ngOnDestroy(): void {
+    this.riveGeneration++;
+    this.resizeObserver?.disconnect();
     this.rive?.cleanup();
   }
 }

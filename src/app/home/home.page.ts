@@ -72,9 +72,9 @@ export class HomePage {
       });
       const dismissed = addUserModal.onDidDismiss<{
         name: string;
-        gender: string;
-        avatar: string;
-        preferGender: string;
+        gender: Player['gender'];
+        avatar: Player['avatar'];
+        preferGender: Player['preferGender'];
       }>();
 
       await addUserModal.present();
@@ -123,10 +123,5 @@ export class HomePage {
   onRemoveCard(index: number) {
     this.players.update(players => players.filter((_, playerIndex) => playerIndex !== index));
   }
-
-  getGenderIcon(gender: string): SafeHtml {
-    return this.genderIcons[gender] ?? this.genderIcons['both'];
-  }
-
   startGame() { this.navCtrl.navigateRoot(['/intensity']); }
 }
