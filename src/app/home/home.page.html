@@ -26,7 +26,7 @@
           </div>
         </button>
 
-        @for (player of players; track $index) {
+        @for (player of players(); track $index) {
         <div class="playersCard" [class.male]="player.preferGender !== 'female'"
           [class.female]="player.preferGender === 'female'">
           <div class="playerInfo">
@@ -54,7 +54,7 @@
         </div>
         }
       </div>
-      @if(players.length > 1) {
+      @if(players().length > 1) {
       <div class="footerBtn">
         <button class="btnPrimary">
           <h4>

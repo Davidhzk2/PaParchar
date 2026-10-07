@@ -1,6 +1,5 @@
 import { AddUserModalComponent } from '../features/add-user-modal/add-user-modal.component';
-import { ChangeDetectorRef, Component, ElementRef, ViewChild, signal } from '@angular/core';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { ChangeDetectorRef, Component, ElementRef, NgZone, ViewChild, signal } from '@angular/core';
 import { NavController, ModalController } from '@ionic/angular/lazy';
 import { Player } from '../core/models/player.model';
 
@@ -37,7 +36,7 @@ const ICON_BOTH = `
 export class HomePage {
   @ViewChild('logoWrapper') logoWrapper!: ElementRef<HTMLElement>;
 
-  players: Player[] = [];
+  players = signal<Player[]>([]);
   isAddUserModalOpen = signal(false);
   showContent = false;
 
@@ -50,14 +49,9 @@ export class HomePage {
     private navCtrl: NavController,
     private modalCtrl: ModalController,
     private cdr: ChangeDetectorRef,
-    private sanitizer: DomSanitizer,
-  ) {
-    this.genderIcons = {
-      both: this.sanitizer.bypassSecurityTrustHtml(ICON_BOTH),
-      female: this.sanitizer.bypassSecurityTrustHtml(ICON_FEMALE),
-      male: this.sanitizer.bypassSecurityTrustHtml(ICON_MALE),
-    };
-  }
+    private ngZone: NgZone,
+
+  ) {}
 
   async openAddUserModal() {
     if (this.isAddUserModalOpen()) {
@@ -73,6 +67,7 @@ export class HomePage {
       });
       const dismissed = addUserModal.onDidDismiss<{
         name: string;
+        gender: string;
         avatar: string;
         preferGender: string;
       }>();
@@ -80,8 +75,10 @@ export class HomePage {
       await addUserModal.present();
       const { data, role } = await dismissed;
       if (role === 'confirm' && data) {
-        this.players = [...this.players, data];
-        this.cdr.detectChanges();
+        this.ngZone.run(() => {
+          this.players.update(players => [...players, data]);
+          this.cdr.detectChanges();
+        });
       }
     } finally {
       this.isAddUserModalOpen.set(false);
@@ -118,10 +115,17 @@ export class HomePage {
     }, { once: true });
   }
 
-  onRemoveCard(index: number) { this.players.splice(index, 1); }
+  onRemoveCard(index: number) {
+    this.players.update(players => players.filter((_, playerIndex) => playerIndex !== index));
+  }
+  getGenderIcon(gender: string): string {
+    const icons: Record<string, string> = {
+      both: 'assets/Iconos/maleFemale.svg',
+      female: 'assets/Iconos/female.svg',
+      male: 'assets/Iconos/male.svg',
+    };
 
-  getGenderIcon(preferGender: string): SafeHtml {
-    return this.genderIcons[preferGender] ?? this.genderIcons['both'];
+    return icons[gender] ?? icons['both'];
   }
 
   startGame() { this.navCtrl.navigateRoot(['/intensity']); }
