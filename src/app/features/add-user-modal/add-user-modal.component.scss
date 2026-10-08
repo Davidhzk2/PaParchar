@@ -29,21 +29,102 @@
   }
 }
 
+.modalAdd__playerInfo {
+  aspect-ratio: 315 / 500;
+
+  position: relative;
+  z-index: 2;
+
+  padding: 2.5rem;
+
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+
+  fieldset {
+    padding: 0;
+    border: 0;
+
+    legend {
+      font-size: 1.3rem;
+      color: #242424;
+      text-align: center;
+
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  .btnCancel {
+    background-color: #FF465B;
+    border: 3px solid #41091F;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    border-radius: 50%;
+    padding: 0.7rem;
+    box-shadow: inset 0 -6px 0 rgba(0, 0, 0, 0.2);
+
+    svg {
+      width: 23px;
+      fill: #FFF;
+
+      path {
+        stroke: #41091F;
+        stroke-width: 2px;
+      }
+    }
+  }
+}
+
+.modalAdd__player {
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  gap: 1.5rem;
+
+  .modalAdd__avatarGender {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+}
+
 .avatar-selector {
   display: flex;
-  width: 100%;
-  flex: 0 0 auto;
+  gap: 1rem;
   justify-content: center;
   align-items: center;
-  padding: 10px 0;
 
 
-  .arrow-button{
+  .arrow-button {
+    margin-top: 1rem;
     background-color: #FDB44D;
-    width: 30px;
-    height: 30px;
     border: 2px solid #40204D;
     border-radius: 50%;
+    box-shadow: inset 0 -6px 0 rgba(0, 0, 0, 0.1);
+    padding: 0.4rem;
+
+    &:first-child {
+      svg {
+        rotate: 180deg;
+      }
+    }
+
+    svg {
+      width: 17px;
+      height: 17px;
+
+      path {
+        fill: #40204D;
+      }
+    }
   }
 }
 
@@ -95,36 +176,88 @@
   }
 }
 
-.modalAdd__playerInfo {
-  aspect-ratio: 315 / 500;
+.genderSelect {
 
-  position: relative;
-  z-index: 2;
+  &.player {
+    .genderContainerInput {
 
-  padding: 1rem;
+      label {
 
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
+        &.both {
+          padding: 0.5rem 0rem 0.4rem 0.5rem;
+          border-radius: 24px 12px 35px 16px;
 
-  fieldset {
-    padding: 0;
-    border: 0;
+          &.selected {
+            padding-right: 1rem;
+          }
+        }
 
-    legend {
-      font-size: 1rem;
-      color: #242424;
-      text-align: center;
+        &.male {
+          padding: 0.5rem 0rem 0.4rem 0.5rem;
+          border-radius: 24px 12px 35px 16px;
 
-      margin-bottom: 0.5rem;
+          &.selected {
+            padding-right: 1rem;
+          }
+        }
+
+        &.female {
+          padding: 0.5rem 0rem 0.4rem 0.5rem;
+          border-radius: 35px 16px 16px 14px;
+
+          &.selected {
+            padding-right: 0.5rem;
+          }
+
+        }
+      }
     }
   }
-}
 
-.genderSelect {
+  &.prefer {
+    .genderContainerInput {
+
+      label {
+
+        &.both,
+        &.male,
+        &.female {
+          &.selected {
+            border-radius: 16px;
+            transition: border-radius .3s ease-in-out;
+          }
+        }
+
+        &.both {
+          padding: 0.5rem 0rem 0.4rem 0.5rem;
+          border-radius: 35px 16px 16px 16px;
+
+          &.selected {
+            padding-right: 1rem;
+          }
+        }
+
+        &.male {
+          padding: 0.5rem 0rem 0.4rem 0.5rem;
+          border-radius: 16px 35px 16px 16px;
+
+          &.selected {
+            padding-right: 1rem;
+          }
+        }
+
+        &.female {
+          padding: 0.5rem 0rem 0.4rem 0.5rem;
+          border-radius: 35px 16px 16px 16px;
+
+          &.selected {
+            padding-right: 0.5rem;
+          }
+
+        }
+      }
+    }
+  }
 
   .genderContainerInput {
     display: flex;
@@ -138,25 +271,19 @@
       --svgColor: #C3C3C3;
 
       &.female {
-        padding: 0.5rem 0rem 0.4rem 0.5rem;
-        border-radius: 35px 16px 16px 14px;
 
         &.selected {
-          padding-right: 0.5rem;
 
           --bgLabel: #D4394B;
-          --borderLabel: #912733;
-          --svgStroke: #912733;
+          --borderLabel: #8E1926;
+          --svgStroke: #8E1926;
           --svgColor: #FFF;
         }
       }
 
       &.male {
-        padding: 0.5rem 0rem 0.4rem 0.5rem;
-        border-radius: 24px 12px 35px 16px;
 
         &.selected {
-          padding-right: 1rem;
 
           --bgLabel: #0091CF;
           --borderLabel: #002B3E;
@@ -166,16 +293,25 @@
       }
 
       &.both {
-        padding: 0.5rem 0rem 0.4rem 0.5rem;
-        border-radius: 24px 12px 35px 16px;
 
         &.selected {
-          padding-right: 1rem;
 
           --bgLabel: #944AB3;
           --borderLabel: #40204D;
           --svgStroke: #40204D;
           --svgColor: #FFF;
+        }
+      }
+
+      svg {
+        overflow: visible;
+        width: 1.6rem;
+        fill: var(--svgColor);
+
+        path {
+          stroke-width: 3px;
+          stroke: var(--svgStroke);
+          paint-order: stroke fill;
         }
       }
 
@@ -185,17 +321,6 @@
         height: 1px;
         padding: 0;
         clip: rect(0, 0, 0, 0);
-      }
-
-      svg {
-        width: 1.8rem;
-        fill: var(--svgColor);
-
-        path {
-          stroke-width: 2px;
-          stroke: var(--svgStroke);
-          paint-order: stroke fill;
-        }
       }
     }
   }
@@ -208,7 +333,7 @@
     grid-template-columns: max-content 0fr;
     gap: 0.3rem;
 
-    transition: grid-template-columns .3s cubic-bezier(0.075, 0.82, 0.165, 1);
+    transition: grid-template-columns .5s cubic-bezier(0.075, 0.82, 0.165, 1);
 
     &.selected {
       grid-template-columns: max-content 1fr;
@@ -216,7 +341,7 @@
     }
 
     span {
-      font-size: 1.4rem;
+      font-size: 1.3rem;
       color: #FFF;
 
       overflow: hidden;
@@ -227,82 +352,53 @@
 
 }
 
-.modalCta {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
+.btnPrimary {
+  transform: scale(1);
+  width: 65%;
+  height: 3.1rem;
+  border: 4px solid #40204D;
 
-  .btnPrimary {
-    transform: scale(1);
-    width: 50%;
-    height: 2.7rem;
-    border: 4px solid #40204D;
+  h4 {
+    top: 0rem;
+    font-size: 2.1rem;
+    -webkit-text-stroke: 0.4rem #40204D;
 
-    h4 {
-      top: 0rem;
-      font-size: 1.8rem;
-      -webkit-text-stroke: 0.4rem #40204D;
-
-      text-shadow: 4px 4px 0 #40204D,
-        5px 5px 0 #40204D,
-        0px 0px 0 #40204D;
-    }
-  }
-
-  .btnCancel {
-    width: max-content;
-    padding: 2px 12px;
-    border: 0;
-    border-bottom: 2px solid #242424;
-    color: #242424;
-    font-size: 1.2rem;
+    text-shadow: 4px 4px 0 #40204D,
+      5px 5px 0 #40204D,
+      0px 0px 0 #40204D;
   }
 }
-
-
 
 .namePlayer {
-  width: 65%;
+  width: 100%;
   padding: 9px 11px;
-  border: 0;
-  border-bottom: 2px solid #242424;
+  border: 2px solid #b8b8b8;
+  border-radius: 1.5rem;
   outline: none;
-  background: transparent;
+  background-color: #F0F0F0;
   color: #242424;
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   text-align: center;
 
+  &:focus-visible {
+    border-color: #944AB3;
+  }
+
   &::placeholder {
-    color: #9a8c9f;
+    color: #b8b8b8;
   }
 }
 
-.avatar-container {
-  display: flex;
-  max-width: 50%;
-  min-height: 150px;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  border: 2px dotted #ff0d00;
+.avatarAnim {
+  animation: bounceIn 0.3s cubic-bezier(0, 0.005, 0.32, 1.63) forwards;
 }
 
-@media (max-height: 480px) {
-  .card-shell {
-    padding: 8px;
+@keyframes bounceIn {
+  0% {
+    transform: scale(0);
   }
 
-  .card-screen {
-    padding-top: 16px;
-    padding-bottom: 10px;
-  }
-
-  .button-add {
-    margin-top: 15px;
+  100% {
+    transform: scale(1);
   }
 }

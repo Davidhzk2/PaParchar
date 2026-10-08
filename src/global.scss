@@ -57,14 +57,16 @@ h6 {
 	line-height: 1;
 	margin: 0;
 	font-family: 'Boogaloo', sans-serif;
-	font-weight: 300;
 	-webkit-text-stroke: 0.6rem #40204D;
 	paint-order: stroke fill;
 	stroke-linejoin: round;
 
-	text-shadow: 4px 6px 0 #40204D,
+	text-shadow: 0.3rem 0.3rem 0 #40204D,
+	0.4rem 0.1rem 0 #40204D;
+
+	/*text-shadow: 4px 6px 0 #40204D,
 	6px 7px 0 #40204D,
-	6px 5px 0 #40204D;
+	6px 5px 0 #40204D;*/
 
 	color: #FFF;
 }
@@ -76,7 +78,7 @@ button{
 }
 
 .addModal{
-	--background: rgba(0, 0, 0, 0.3);
+	--background: rgba(0, 0, 0, 0.6);
 
 	.ion-page{
 		display: flex;
@@ -94,22 +96,19 @@ button{
   box-shadow: inset 0 -6px 0 #D2953F;
 
   width: 63%;
-  max-width: 226px;
-  height: 4rem;
+  max-width: 210px;
+  height: 3.8rem;
   border-radius: 3rem 3rem 6rem 6rem;
   color: #FFF;
   font-family: inherit;
 
   margin: 0 auto;
 
-  transform: scale(0);
-  animation: btnBounce 0.3s cubic-bezier(0, 0.005, 0.32, 1.63) forwards;
-
   h4 {
     width: max-content;
-    font-size: 3rem;
+	font-size: 2.5rem;
     position: absolute;
-    top: -0.2rem;
+    top: 0rem;
     left: 50%;
     transform: translateX(-50%);
   }

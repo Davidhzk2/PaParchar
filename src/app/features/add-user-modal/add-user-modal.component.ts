@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ModalController } from '@ionic/angular/lazy';
 import { Avatar, Gender } from '../../core/models/player.model';
-import {mockAvatars} from '../../data/mockdata';
+import { mockAvatars } from '../../data/mockdata';
 
 @Component({
   selector: 'app-add-user-modal',
@@ -18,6 +18,12 @@ export class AddUserModalComponent {
   genderPreference = 'female';
 
   constructor(private modalCtrl: ModalController) {}
+
+  // Cambia cuando cambia el avatar o el género: se usa como `track` para recrear el rive-player
+  get avatarKey(): string {
+    const a = this.selectedAvatar;
+    return `${a.src}|${a.artboard}|${a.stateMachine}|${this.gender}`;
+  }
 
   onGenderChange(gender: Gender) {
     this.gender = gender;

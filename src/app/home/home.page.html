@@ -26,15 +26,16 @@
           </div>
         </button>
 
-        @for (player of players(); track $index) {
-        <div class="playersCard" [class.male]="player.gender === 'male'"
-          [class.female]="player.gender === 'female'">
+        @for (player of players(); track player) {
+        <div #card class="playersCard" [class.male]="player.gender === 'male'"
+          [class.female]="player.gender === 'female'"
+          [class.removing]="removingPlayers().has(player)">
           <div class="playerInfo">
             <rive-player
               [src]="player.avatar.src"
               [artboard]="player.avatar.artboard"
               [stateMachine]="player.avatar.stateMachine"
-              [isIdle]="chickenIdle"
+              [isIdle]="true"
               [gender]="player.gender"
               [showGender]="true"
               size="medium"
@@ -42,8 +43,8 @@
             ></rive-player>
             <!-- <button (click)="chickenIdle = !chickenIdle" class="btnPruebaBorrar">Cambiar estado</button> -->
           </div>
-          <button class="btnClose" (click)="onRemoveCard($index)">
-            <svg viewBox="0 0 30 30" fill="none">
+          <button class="btnClose" (click)="onRemoveCard(player)">
+            <svg viewBox="6 6 18 18" fill="none">
               <g>
                 <path
                   d="M22.0812 22.0475C21.0397 23.0891 19.5583 22.8655 18.1833 21.7892C17.5508 21.3061 16.3644 20.1904 14.9894 18.8941C13.429 20.4545 12.0573 21.7556 11.5385 22.1251C10.3476 23.0174 8.8662 23.0139 7.97838 22.1261C6.86666 21.0143 7.08708 19.6782 7.90469 18.6406C8.27421 18.1219 9.57526 16.6715 11.1357 15.0404C9.57617 13.4101 8.27983 12.0351 7.86737 11.5519C7.01499 10.4008 7.01543 8.84474 7.86836 7.99181C8.9807 6.87946 10.3559 7.13843 11.397 7.88081C11.9156 8.25003 13.3259 9.58959 14.9602 11.1452C16.4813 9.62408 17.8176 8.43701 18.301 8.10287C19.6373 7.21444 21.0481 6.91148 22.0891 7.9525C23.1301 8.99351 22.8704 10.4396 21.7933 11.8152C21.3098 12.448 20.1974 13.6311 18.8964 15.0107C20.3813 16.4956 21.607 17.792 21.9369 18.3499C22.8246 19.6857 23.4174 20.7113 22.4151 21.7136L22.0812 22.0475Z" />

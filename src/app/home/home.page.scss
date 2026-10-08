@@ -21,14 +21,14 @@
     &.line_1 {
       right: 0;
       width: 15vw;
-      min-width: 121px;
+      min-width: 90px;
       animation-delay: 4s;
     }
 
     &.line_2 {
       right: 20%;
       width: 10vw;
-      min-width: 54px;
+      min-width: 44px;
       animation-delay: 4.2s;
     }
 
@@ -50,7 +50,7 @@
     &.line_5 {
       left: 0;
       width: 15vw;
-      min-width: 147px;
+      min-width: 110px;
       animation-delay: 4s;
     }
   }
@@ -111,7 +111,7 @@
   padding-top: 2rem;
 
   img {
-    max-width: 17rem;
+    max-width: 13.5rem;
     width: 100%;
     height: auto;
     transform: scale(0);
@@ -183,6 +183,13 @@ h1 {
     align-items: flex-start;
     justify-content: center;
 
+    animation: bounceIn 0.3s cubic-bezier(0, 0.005, 0.32, 1.63) forwards;
+
+    &.removing{
+      pointer-events: none;
+      animation: bounceOut 0.3s cubic-bezier(0.51, -0.25, 1, 0.669) forwards;
+    }
+
     &.male {
       --bg: #0091CF;
       --shadow: #0073A4;
@@ -222,33 +229,22 @@ h1 {
     .playerName {
       padding: .2rem 1rem;
       position: absolute;
-      bottom: -20px;
+      bottom: -10px;
+      width: 90%;
       margin: 0 auto;
       border-radius: 1rem 1rem 2rem 2rem;
-      width: 100%;
       background-color: var(--bg);
-      border: 3px solid var(--border);
+      border: 2px solid var(--border);
       paint-order: stroke fill;
       box-shadow: inset 0 -6px 0 var(--shadow);
 
       h3 {
         font-size: 1.2rem;
-        -webkit-text-stroke: 0.3rem var(--border);
+        -webkit-text-stroke: 0.25rem var(--border);
         text-shadow: none;
       }
     }
   }
-}
-
-.btnPruebaBorrar{
-  position: absolute;
-  z-index: 999;
-  background-color: yellow;
-  font-size: 2rem;
-  width: max-content;
-  padding: 2rem;
-  left: 50%;
-  transform: translateX(-50%);
 }
 
 .btnIcon {
@@ -277,12 +273,13 @@ h1 {
   background-color: #FF465B;
   border: 2px solid #41091F;
   position: absolute;
-  top: -4px;
-  right: -4px;
+  top: -10px;
+  right: -5px;
   border-radius: 50%;
+  padding: 0.3rem;
 
   svg {
-    width: 22px;
+    width: 13px;
     fill: #FFF;
 
     path {
@@ -298,10 +295,15 @@ h1 {
   right: 0;
   bottom: 0;
   width: 100%;
-  padding: 2.5rem 0;
+  padding: 1.5rem 0;
   background: linear-gradient(to bottom, #934ab300, #944AB3);
   opacity: 1;
   animation: footerBtnIn 0.5s ease forwards;
+
+  .btnPrimary {
+    transform: scale(0);
+    animation: bounceIn 0.3s cubic-bezier(0, 0.005, 0.32, 1.63) forwards;
+  }
 }
 
 @keyframes footerBtnIn {
@@ -314,12 +316,22 @@ h1 {
   }
 }
 
-@keyframes btnBounce {
+@keyframes bounceIn {
   0% {
     transform: scale(0);
   }
 
   100% {
     transform: scale(1);
+  }
+}
+
+@keyframes bounceOut {
+  0% {
+    transform: scale(1);
+  }
+
+  100% {
+    transform: scale(0);
   }
 }

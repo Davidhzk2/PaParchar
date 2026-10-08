@@ -1,5 +1,5 @@
 import { AddUserModalComponent } from '../features/add-user-modal/add-user-modal.component';
-import { ChangeDetectorRef, Component, ElementRef, NgZone, ViewChild, signal } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, NgZone, QueryList, ViewChild, ViewChildren, signal } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { NavController, ModalController } from '@ionic/angular/lazy';
 import { Player } from '../core/models/player.model';
@@ -34,12 +34,18 @@ const ICON_BOTH = `
 
 export class HomePage {
   @ViewChild('logoWrapper') logoWrapper!: ElementRef<HTMLElement>;
+  @ViewChildren('card') cards!: QueryList<ElementRef<HTMLElement>>;
 
   players = signal<Player[]>([]);
   isAddUserModalOpen = signal(false);
   showContent = false;
 
   chickenIdle = false;
+
+  removingPlayers = signal<Set<Player>>(new Set());
+
+  private readonly REMOVE_ANIMATION_MS = 300;   // igual a la duración del CSS
+  private readonly REFLOW_ANIMATION_MS = 400;
 
   // Se sanitizan una sola vez, no en cada ciclo de detección de cambios
   private readonly genderIcons: Record<string, SafeHtml>;
@@ -81,8 +87,9 @@ export class HomePage {
       const { data, role } = await dismissed;
       if (role === 'confirm' && data) {
         this.ngZone.run(() => {
-          this.players.update(players => [...players, data]);
-          this.cdr.detectChanges();
+          this.animateReflow(() => {
+            this.players.update(players => [...players, data]);
+          });
         });
       }
     } finally {
@@ -120,8 +127,60 @@ export class HomePage {
     }, { once: true });
   }
 
-  onRemoveCard(index: number) {
-    this.players.update(players => players.filter((_, playerIndex) => playerIndex !== index));
+  /**
+   * FLIP para el grid: mide cada card, aplica el cambio, y anima cada una
+   * desde su posición anterior hasta la nueva.
+   */
+  private animateReflow(mutate: () => void) {
+    // First: posición actual de cada card
+    const first = new Map<HTMLElement, DOMRect>();
+    this.cards?.forEach(c => first.set(c.nativeElement, c.nativeElement.getBoundingClientRect()));
+
+    // Aplica el cambio y deja que el grid se reorganice
+    mutate();
+    this.cdr.detectChanges();
+
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    // Last + Invert + Play
+    this.cards.forEach(c => {
+      const el = c.nativeElement;
+      const prev = first.get(el);
+      if (!prev) return;                        // card nueva: no hay posición previa
+
+      const last = el.getBoundingClientRect();
+      const dx = prev.left - last.left;
+      const dy = prev.top - last.top;
+      if (!dx && !dy) return;                   // no se movió
+
+      el.animate(
+        [{ translate: `${dx}px ${dy}px` }, { translate: '0 0' }],
+        { duration: this.REFLOW_ANIMATION_MS, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' },
+      );
+    });
   }
+
+  onRemoveCard(player: Player) {
+    this.ngZone.run(() => {
+      if (this.removingPlayers().has(player)) return;
+
+      // 1. Marca la card: el CSS dispara la animación de salida
+      this.removingPlayers.update(set => new Set(set).add(player));
+      this.cdr.detectChanges();
+
+      // 2. Al terminar la animación, la quitamos y reorganizamos el grid
+      setTimeout(() => {
+        this.animateReflow(() => {
+          this.players.update(players => players.filter(p => p !== player));
+          this.removingPlayers.update(set => {
+            const next = new Set(set);
+            next.delete(player);
+            return next;
+          });
+        });
+      }, this.REMOVE_ANIMATION_MS);
+    });
+  }
+
   startGame() { this.navCtrl.navigateRoot(['/intensity']); }
 }
