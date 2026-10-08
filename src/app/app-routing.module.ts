@@ -11,6 +11,10 @@ const routes: Routes = [
     path: 'home',
     redirectTo: '',
     pathMatch: 'full'
+  },
+  {
+    path: 'mode-selection',
+    loadChildren: () => import('./pages/mode-selection/mode-selection.module').then( m => m.ModeSelectionPageModule)
   }
 ];
 
