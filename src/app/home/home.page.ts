@@ -182,5 +182,9 @@ export class HomePage {
     });
   }
 
-  startGame() { this.navCtrl.navigateRoot(['/intensity']); }
+  startGame() {
+    this.navCtrl.navigateForward(['/mode-selection'], {
+      state: { players: this.players() },
+    });
+  }
 }

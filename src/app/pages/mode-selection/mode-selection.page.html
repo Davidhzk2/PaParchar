@@ -1,13 +1,61 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>mode-selection</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content [fullscreen]="true" class="mode-content">
+  <main class="mode-page">
+    <section class="intensity-section" aria-labelledby="intensity-title">
+      <h1 id="intensity-title">Intensidad</h1>
+      <div class="intensity-options">
+        @for (intensity of intensities; track intensity.id) {
+        <button
+          type="button"
+          class="intensity-option"
+          [class.selected]="selectedIntensity === intensity.id"
+          [attr.aria-pressed]="selectedIntensity === intensity.id"
+          (click)="selectedIntensity = intensity.id">
+          <img [src]="intensity.image" [alt]="intensity.label">
+          <span>{{ intensity.label }}</span>
+        </button>
+        }
+      </div>
+    </section>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">mode-selection</ion-title>
-    </ion-toolbar>
-  </ion-header>
+    <section class="games-section" aria-labelledby="games-title">
+      <h2 id="games-title">Juegos</h2>
+      <div class="game-options">
+        @for (game of games; track game.id) {
+        <button
+          type="button"
+          class="game-option"
+          [class.selected]="selectedGame === game.id"
+          [class.game-option--cards]="game.id === 'barajas'"
+          [class.game-option--roulette]="game.id === 'ruleta'"
+          [class.game-option--board]="game.id === 'tablero'"
+          [attr.aria-pressed]="selectedGame === game.id"
+          (click)="selectedGame = game.id">
+          @if (game.id === 'ruleta') {
+          <img class="game-image" src="assets/Juegos/Tablero/Ruleta.png" alt="">
+          }
+          @if (game.id === 'barajas') {
+          <img class="game-image game-image--cards" src="assets/Juegos/Baraja/Reverso.png" alt="">
+          }
+          <span class="game-label">{{ game.label }}</span>
+        </button>
+        }
+      </div>
+    </section>
+  </main>
+
+  <div class="players-dock" aria-label="Jugadores">
+    @for (player of players; track $index) {
+    <div class="player-avatar" [attr.aria-label]="player.name">
+      <rive-player
+        [src]="player.avatar.src"
+        [artboard]="player.avatar.artboard"
+        [stateMachine]="player.avatar.stateMachine"
+        [isIdle]="true"
+        [gender]="player.gender"
+        [showGender]="false"
+        size="small">
+      </rive-player>
+    </div>
+    }
+  </div>
 </ion-content>
