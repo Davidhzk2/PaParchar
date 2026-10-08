@@ -35,7 +35,7 @@
   position: relative;
   z-index: 2;
 
-  padding: 2.5rem;
+  padding: 2rem 1rem;
 
   flex: 1;
   display: flex;
@@ -85,14 +85,22 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
 
   gap: 1.5rem;
 
-  .modalAdd__avatarGender {
+  .modalAdd__avatarName {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.5rem;
+    gap: 1.5rem;
+  }
+
+  .modalAdd__genders{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
   }
 }
 
