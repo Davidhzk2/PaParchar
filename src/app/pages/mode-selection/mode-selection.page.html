@@ -1,34 +1,29 @@
-<ion-content [fullscreen]="true" class="mode-content">
+<ion-content [fullscreen]="true" class="mode-content" [attr.data-intensity]="selectedIntensity">
   <main class="mode-page">
-    <section class="intensity-section" aria-labelledby="intensity-title">
-      <h1 id="intensity-title">Intensidad</h1>
-      <div class="intensity-options">
-        @for (intensity of intensities; track intensity.id) {
-        <button
-          type="button"
-          class="intensity-option"
-          [class.selected]="selectedIntensity === intensity.id"
-          [attr.aria-pressed]="selectedIntensity === intensity.id"
-          (click)="selectedIntensity = intensity.id">
-          <img [src]="intensity.image" [alt]="intensity.label">
-          <span>{{ intensity.label }}</span>
-        </button>
-        }
+
+    <section class="intensity" aria-labelledby="intensity-title">
+      <h1>Intensidad</h1>
+      <div class="intensity__container">
+        <div class="intensity__wrapper" #list (scroll)="onScroll()" (touchstart)="onTouchStart()"
+          (touchend)="onTouchEnd()" (touchcancel)="onTouchEnd()">
+
+          @for (intensity of intensities; track intensity.id; let i = $index) {
+          <button type="button" class="intensity__level" [class.selected]="selectedIntensity === intensity.id"
+            [attr.aria-pressed]="selectedIntensity === intensity.id" (click)="selectIntensity(i)">
+            <img [src]="intensity.image" [alt]="intensity.label">
+          </button>
+          }
+        </div>
       </div>
     </section>
 
-    <section class="games-section" aria-labelledby="games-title">
+    <section class="games-section games" aria-labelledby="games-title">
       <h2 id="games-title">Juegos</h2>
       <div class="game-options">
         @for (game of games; track game.id) {
-        <button
-          type="button"
-          class="game-option"
-          [class.selected]="selectedGame === game.id"
-          [class.game-option--cards]="game.id === 'barajas'"
-          [class.game-option--roulette]="game.id === 'ruleta'"
-          [class.game-option--board]="game.id === 'tablero'"
-          [attr.aria-pressed]="selectedGame === game.id"
+        <button type="button" class="game-option" [class.selected]="selectedGame === game.id"
+          [class.game-option--cards]="game.id === 'barajas'" [class.game-option--roulette]="game.id === 'ruleta'"
+          [class.game-option--board]="game.id === 'tablero'" [attr.aria-pressed]="selectedGame === game.id"
           (click)="selectedGame = game.id">
           @if (game.id === 'ruleta') {
           <img class="game-image" src="assets/Juegos/Tablero/Ruleta.png" alt="">
@@ -44,15 +39,17 @@
   </main>
 
   <div class="players-dock" aria-label="Jugadores">
+    <button class="playersCard add"> <!--(click)="openAddUserModal()"-->
+      <div class="btnIcon">
+        <img src="../../assets/Botones/btn_add-front.png" alt="logo-add">
+        <img src="../../assets/Botones/btn-add-back.png" alt="logo-add">
+      </div>
+    </button>
+
     @for (player of players; track $index) {
     <div class="player-avatar" [attr.aria-label]="player.name">
-      <rive-player
-        [src]="player.avatar.src"
-        [artboard]="player.avatar.artboard"
-        [stateMachine]="player.avatar.stateMachine"
-        [isIdle]="true"
-        [gender]="player.gender"
-        [showGender]="false"
+      <rive-player [src]="player.avatar.src" [artboard]="player.avatar.artboard"
+        [stateMachine]="player.avatar.stateMachine" [isIdle]="true" [gender]="player.gender" [showGender]="false"
         size="small">
       </rive-player>
     </div>

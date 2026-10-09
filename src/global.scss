@@ -40,7 +40,7 @@
 	--ion-font-family: 'Boogaloo', sans-serif;
 }
 
-*{
+* {
 	box-sizing: border-box;
 }
 
@@ -62,7 +62,7 @@ h6 {
 	stroke-linejoin: round;
 
 	text-shadow: 0.3rem 0.3rem 0 #40204D,
-	0.4rem 0.1rem 0 #40204D;
+		0.4rem 0.1rem 0 #40204D;
 
 	/*text-shadow: 4px 6px 0 #40204D,
 	6px 7px 0 #40204D,
@@ -71,16 +71,16 @@ h6 {
 	color: #FFF;
 }
 
-button{
+button {
 	background-color: transparent;
 	border: none;
 	outline: none;
 }
 
-.addModal{
+.addModal {
 	--background: rgba(0, 0, 0, 0.6);
 
-	.ion-page{
+	.ion-page {
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -88,28 +88,52 @@ button{
 }
 
 .btnPrimary {
-  position: relative;
+	position: relative;
 
-  background-color: #FDB44D;
-  border: 5px solid #40204D;
-  paint-order: stroke fill;
-  box-shadow: inset 0 -6px 0 #D2953F;
+	background-color: #FDB44D;
+	border: 5px solid #40204D;
+	paint-order: stroke fill;
+	box-shadow: inset 0 -6px 0 #D2953F;
 
-  width: 63%;
-  max-width: 210px;
-  height: 3.8rem;
-  border-radius: 3rem 3rem 6rem 6rem;
-  color: #FFF;
-  font-family: inherit;
+	width: 63%;
+	max-width: 210px;
+	height: 3.8rem;
+	border-radius: 3rem 3rem 6rem 6rem;
+	color: #FFF;
+	font-family: inherit;
 
-  margin: 0 auto;
+	margin: 0 auto;
 
-  h4 {
-    width: max-content;
-	font-size: 2.5rem;
-    position: absolute;
-    top: 0rem;
-    left: 50%;
-    transform: translateX(-50%);
-  }
+	h4 {
+		width: max-content;
+		font-size: 2.5rem;
+		position: absolute;
+		top: 0rem;
+		left: 50%;
+		transform: translateX(-50%);
+	}
+}
+
+@property --radial-a {
+	syntax: '<number>';
+	inherits: true;
+	initial-value: 1;
+}
+
+@property --bg-1 {
+	syntax: '<color>';
+	inherits: true;
+	initial-value: #48ccff;
+}
+
+@property --bg-2 {
+	syntax: '<color>';
+	inherits: true;
+	initial-value: #16a6f1;
+}
+
+@property --bg-3 {
+	syntax: '<color>';
+	inherits: true;
+	initial-value: #087bc8;
 }

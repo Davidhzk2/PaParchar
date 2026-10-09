@@ -1,78 +1,168 @@
 .mode-content {
+  // Colores del lineal (en el estado por defecto quedan tapados por el radial)
+  --bg-1: #48ccff;
+  --bg-2: #16a6f1;
+  --bg-3: #087bc8;
+  --radial-a: 1; // 1 = radial visible, 0 = solo se ve el lineal
+
   --background:
-    radial-gradient(ellipse at center, #48ccff 0%, #16a6f1 72%, #087bc8 100%);
+    radial-gradient(ellipse at center,
+      color-mix(in srgb, #6BCFFF calc(var(--radial-a) * 100%), transparent) 0%,
+      color-mix(in srgb, #0F93FC calc(var(--radial-a) * 100%), transparent) 100%),
+    linear-gradient(to bottom, var(--bg-1), var(--bg-2), var(--bg-3));
+
+  transition:
+    --radial-a 0.6s ease,
+    --bg-1 0.6s ease,
+    --bg-2 0.6s ease,
+    --bg-3 0.6s ease;
   color: #fff;
+
+  // romper-hielo: usa los valores por defecto (radial visible)
+
+  &[data-intensity="beber"] {
+    --radial-a: 0;
+    --bg-1: #FDF2DC;
+    --bg-2: #FDC202;
+    --bg-3: #FF8E01;
+  }
+
+  &[data-intensity="parchar"] {
+    --radial-a: 0;
+    --bg-1: #C91C61;
+    --bg-2: #C91C61;
+    --bg-3: #944AB3;
+  }
+
+  &[data-intensity="calentar"] {
+    --radial-a: 0;
+    --bg-1: #3B0025;
+    --bg-2: #84002E;
+    --bg-3: #FF7B00;
+  }
+
+  &[data-intensity="gozar"] {
+    --radial-a: 0;
+    --bg-1: #1A083B;
+    --bg-2: #0C0715;
+    --bg-3: #0C0715;
+  }
 }
 
 .mode-page {
-  min-height: 100%;
-  box-sizing: border-box;
-  padding: 1rem 1.25rem 7rem;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  background-image:
-    repeating-linear-gradient(125deg, transparent 0 38px, #ffffff0d 39px 41px, transparent 42px 78px),
-    repeating-linear-gradient(35deg, transparent 0 52px, #ffffff0a 53px 55px, transparent 56px 104px);
 }
 
-h1,
-h2 {
-  margin: 0;
-  color: #fff;
-  font-size: 1.5rem;
-  text-align: center;
-  text-shadow: 2px 3px 0 #123c79;
-}
-
-.intensity-options {
-  display: flex;
-  justify-content: center;
-  gap: 0.75rem;
-  margin-top: 0.4rem;
-}
-
-.intensity-option {
+.intensity {
   flex: 1;
-  max-width: 9rem;
-  min-height: 7rem;
-  padding: 0.35rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 0.25rem;
-  color: #fff;
-  background: #086fb4aa;
-  border: 2px solid #064e91;
-  border-radius: 1rem;
-  box-shadow: inset 0 -5px 0 #06477f, 0 3px 0 #06477f;
-  transition: transform 150ms ease, background-color 150ms ease, box-shadow 150ms ease;
+  padding: 2rem 0;
 
-  img {
-    width: 4.4rem;
-    height: 4.4rem;
-    object-fit: contain;
+  h1 {
+    font-size: 2.5rem;
   }
 
-  span {
-    font-size: 0.75rem;
-    font-weight: 700;
-    text-shadow: 1px 2px 0 #123c79;
+  .intensity__container {
+    flex: 1;
+    height: 100%;
+    display: grid;
+    place-items: center;
+  }
+}
+
+.intensity__wrapper {
+  --levelInactive: 9rem;
+  --activeScale: 1.6;
+  --slot: calc(var(--levelInactive) * (1 + var(--activeScale)) / 2);
+  --windowH: calc(var(--levelInactive) * (2 + var(--activeScale)));
+
+  width: calc(var(--levelInactive) * var(--activeScale) * 1.1); // 15rem + 10% de margen
+  max-width: 100%;
+  height: var(--windowH);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+  margin-top: -2.5rem;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  // Espaciadores: dejan al primero y al último llegar al centro
+  &::before,
+  &::after {
+    content: '';
+    flex: 0 0 calc((var(--windowH) - var(--slot)) / 2);
+  }
+}
+
+.intensity__level {
+  flex: 0 0 var(--slot);
+  width: 100%;
+  height: var(--slot);
+  display: grid;
+  place-items: center;
+  opacity: 0.5;
+  transition: opacity 0.3s ease;
+
+  &:last-child {
+    position: relative;
+
+    &::before {
+      content: '';
+      scale: 1;
+      opacity: 0;
+      display: block;
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url(../../../assets/bg-logoGozar.png);
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      mix-blend-mode: soft-light;
+
+
+    }
+
+  }
+
+  img {
+    width: var(--levelInactive);
+    height: var(--levelInactive);
+    object-fit: contain;
+    transition: transform 0.3s ease-in-out;
   }
 
   &.selected {
-    background: #0d8ed5;
-    border-color: #fff;
-    box-shadow: inset 0 -5px 0 #0561a1, 0 0 0 2px #ffffff66;
-    transform: translateY(-2px);
+    opacity: 1;
+
+    &:last-child {
+
+      &::before {
+        scale: 1.3;
+        opacity: 0.7;
+        transition: opacity .3s ease-in-out, scale .3s ease-in-out;
+      }
+
+    }
+
+    img {
+      transform: scale(var(--activeScale));
+    }
   }
 }
 
 .games-section {
-  display: flex;
-  flex-direction: column;
-  gap: 0.55rem;
+  display: none;
 }
 
 .game-options {
@@ -143,6 +233,7 @@ h2 {
 }
 
 .players-dock {
+  display: flex;
   position: fixed;
   z-index: 2;
   right: 0;
@@ -150,7 +241,6 @@ h2 {
   left: 0;
   min-height: 5rem;
   padding: 0.5rem 0.75rem max(0.5rem, env(safe-area-inset-bottom));
-  display: flex;
   align-items: center;
   gap: 0.55rem;
   overflow-x: auto;
