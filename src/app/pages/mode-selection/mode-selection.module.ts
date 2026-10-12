@@ -8,6 +8,7 @@ import { ModeSelectionPageRoutingModule } from './mode-selection-routing.module'
 
 import { ModeSelectionPage } from './mode-selection.page';
 import { RivePreviewComponent } from '../../features/riveAnimation/player/player.component';
+import { RiveIntensityComponent } from '../../features/riveAnimation/intensity/intensitycomponent.';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { RivePreviewComponent } from '../../features/riveAnimation/player/player
     FormsModule,
     IonicModule,
     ModeSelectionPageRoutingModule,
-    RivePreviewComponent
+    RivePreviewComponent,
+    RiveIntensityComponent
   ],
   declarations: [ModeSelectionPage]
 })

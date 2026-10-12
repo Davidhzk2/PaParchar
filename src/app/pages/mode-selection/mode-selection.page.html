@@ -1,5 +1,7 @@
 <ion-content [fullscreen]="true" class="mode-content" [attr.data-intensity]="selectedIntensity">
 
+  <rive-intensity class="intensity-bg"></rive-intensity>
+
   <div class="btnBack" (click)="closeGames()">
     <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 186.01 169.25">
       <path
@@ -9,7 +11,7 @@
 
   <main class="mode-page">
 
-    <section class="intensity" [class.intensityGames]="gamesOpen"  aria-labelledby="intensity-title">
+    <section class="intensity" [class.intensityGames]="gamesOpen" aria-labelledby="intensity-title">
       <h1>Escoge la intensidad</h1>
       <div class="intensity__container">
         <div class="intensity__wrapper" [class.intensity__wrapper--row]="gamesOpen" #list (scroll)="onScroll()"
@@ -32,10 +34,8 @@
       <div class="game-options">
         @for (game of games; track game.id) {
         <button type="button" class="game-option" [class.selected]="selectedGame === game.id"
-          [class.game-option--cards]="game.id === 'barajas'"
-          [class.game-option--roulette]="game.id === 'ruleta'"
-          [class.game-option--board]="game.id === 'tablero'"
-          [attr.aria-pressed]="selectedGame === game.id"
+          [class.game-option--cards]="game.id === 'barajas'" [class.game-option--roulette]="game.id === 'ruleta'"
+          [class.game-option--board]="game.id === 'tablero'" [attr.aria-pressed]="selectedGame === game.id"
           (click)="selectedGame = game.id">
 
           @if (game.id === 'ruleta') {

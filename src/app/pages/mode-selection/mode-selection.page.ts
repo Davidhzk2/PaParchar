@@ -1,6 +1,7 @@
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Player } from '../../core/models/player.model';
+import { RiveIntensityComponent } from '../../features/riveAnimation/intensity/intensitycomponent.';
 
 /*
  * ============================================================================
@@ -88,6 +89,10 @@ export class ModeSelectionPage implements OnInit, AfterViewInit, OnDestroy {
   // ==========================================================================
 
   private _selectedIntensity: IntensityId = 'romper-hielo';
+  activeIntensity: IntensityId | null = null;       // la que recibe el Rive
+  private readonly RIVE_DWELL_MS = 350;               // tiempo quieto antes de activar
+  private dwellTimer?: ReturnType<typeof setTimeout>;
+  @ViewChild(RiveIntensityComponent) riveIntensity?: RiveIntensityComponent;
 
   /** Intensidad activa. El HTML la usa para [class.selected] y data-intensity (fondo). */
   get selectedIntensity(): IntensityId {
@@ -97,7 +102,10 @@ export class ModeSelectionPage implements OnInit, AfterViewInit, OnDestroy {
   set selectedIntensity(id: IntensityId) {
     if (id === this._selectedIntensity) return;
     this._selectedIntensity = id;
-    this.clearShake();   // [SHAKE] al cambiar de logo se corta cualquier temblor pendiente
+    this.clearShake();
+
+    clearTimeout(this.dwellTimer);
+    this.dwellTimer = setTimeout(() => this.riveIntensity?.setActive(id), this.RIVE_DWELL_MS);
   }
 
   selectedGame: GameId = 'barajas';
@@ -171,26 +179,30 @@ export class ModeSelectionPage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    const el = this.list.nativeElement;
+  const el = this.list.nativeElement;
 
-    // [SCROLL] Posiciona la lista en la intensidad seleccionada al entrar (empieza en columna).
-    const index = this.intensities.findIndex(i => i.id === this.selectedIntensity);
-    el.scrollTop = index * this.itemSize;
+  // [SCROLL] Posiciona la lista en la intensidad seleccionada al entrar (empieza en columna).
+  const index = this.intensities.findIndex(i => i.id === this.selectedIntensity);
+  el.scrollTop = index * this.itemSize;
 
-    // [SCROLL] Cuando el navegador avisa que el scroll terminó, centramos el logo más cercano.
-    el.addEventListener('scrollend', () => {
-      if (!this.touching) this.settle();
-    });
+  // [SCROLL] Cuando el navegador avisa que el scroll terminó, centramos el logo más cercano.
+  el.addEventListener('scrollend', () => {
+    if (!this.touching) this.settle();
+  });
 
-    // [SHAKE] Al terminar el temblor se quita la clase para que no quede "armada".
-    el.addEventListener('animationend', (e: AnimationEvent) => {
-      if (e.animationName === 'remember') {
-        (e.target as HTMLElement).classList.remove('shake');
-      }
-    });
+  // [SHAKE] Al terminar el temblor se quita la clase para que no quede "armada".
+  el.addEventListener('animationend', (e: AnimationEvent) => {
+    if (e.animationName === 'remember') {
+      (e.target as HTMLElement).classList.remove('shake');
+    }
+  });
 
-    this.startShakeLoop();
-  }
+  this.startShakeLoop();
+
+  // [RIVE] Activa la intensidad inicial. Si el Rive aún no cargó, el componente
+  // guarda el valor y lo aplica solo cuando termine de cargar.
+  this.riveIntensity?.setActive(this.selectedIntensity);
+}
 
   ngOnDestroy() {
     clearTimeout(this.settleTimer);
