@@ -9,8 +9,7 @@ describe('AddUserModalComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [AddUserModalComponent],
-      imports: [IonicModule.forRoot()],
+      imports: [IonicModule.forRoot(), AddUserModalComponent],
     });
 
     fixture = TestBed.createComponent(AddUserModalComponent);

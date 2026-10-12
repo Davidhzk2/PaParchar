@@ -1,8 +1,9 @@
 import { AddUserModalComponent } from '../features/add-user-modal/add-user-modal.component';
-import { ChangeDetectorRef, Component, ElementRef, NgZone, QueryList, ViewChild, ViewChildren, signal } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, NgZone, QueryList, Signal, ViewChild, ViewChildren, signal } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { NavController, ModalController } from '@ionic/angular/lazy';
 import { Player } from '../core/models/player.model';
+import { GameStateService } from '../core/services/game-state.service';
 
 const ICON_MALE = `
 <svg viewBox="0 -1 30 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -36,7 +37,7 @@ export class HomePage {
   @ViewChild('logoWrapper') logoWrapper!: ElementRef<HTMLElement>;
   @ViewChildren('card') cards!: QueryList<ElementRef<HTMLElement>>;
 
-  players = signal<Player[]>([]);
+  readonly players: Signal<Player[]>;
   isAddUserModalOpen = signal(false);
   showContent = false;
 
@@ -56,7 +57,9 @@ export class HomePage {
     private cdr: ChangeDetectorRef,
     private ngZone: NgZone,
     private sanitizer: DomSanitizer,
+    private gameState: GameStateService,
   ) {
+    this.players = this.gameState.players;
     this.genderIcons = {
       both: this.sanitizer.bypassSecurityTrustHtml(ICON_BOTH),
       female: this.sanitizer.bypassSecurityTrustHtml(ICON_FEMALE),
@@ -88,7 +91,7 @@ export class HomePage {
       if (role === 'confirm' && data) {
         this.ngZone.run(() => {
           this.animateReflow(() => {
-            this.players.update(players => [...players, data]);
+            this.gameState.addPlayer(data);
           });
         });
       }
@@ -171,7 +174,7 @@ export class HomePage {
       // 2. Al terminar la animación, la quitamos y reorganizamos el grid
       setTimeout(() => {
         this.animateReflow(() => {
-          this.players.update(players => players.filter(p => p !== player));
+          this.gameState.removePlayer(player);
           this.removingPlayers.update(set => {
             const next = new Set(set);
             next.delete(player);
@@ -183,8 +186,6 @@ export class HomePage {
   }
 
   startGame() {
-    this.navCtrl.navigateForward(['/mode-selection'], {
-      state: { players: this.players() },
-    });
+    this.navCtrl.navigateForward(['/mode-selection']);
   }
 }

@@ -62,18 +62,20 @@
 
   <div class="players-dock" aria-label="Jugadores">
 
-    <button class="btnAdd"> <!--(click)="openAddUserModal()"-->
+    <button type="button" class="btnAdd" aria-label="Agregar jugador" (click)="openAddUserModal()">
       <img src="../../assets/Botones/btn_add-front.png" alt="logo-add">
       <img src="../../assets/Botones/btn-add-back.png" alt="logo-add">
     </button>
 
-    @for (player of players; track $index) {
-    <div class="player-avatar" [attr.aria-label]="player.name">
-      <rive-player [src]="player.avatar.src" [artboard]="player.avatar.artboard"
-        [stateMachine]="player.avatar.stateMachine" [isIdle]="true" [gender]="player.gender" [showGender]="false"
-        size="small">
-      </rive-player>
+    <div class="players-scroll" aria-label="Lista de jugadores">
+      @for (player of players(); track $index) {
+      <div class="player-avatar" [attr.aria-label]="player.name">
+        <rive-player [src]="player.avatar.src" [artboard]="player.avatar.artboard"
+          [stateMachine]="player.avatar.stateMachine" [isIdle]="true" [gender]="player.gender" [showGender]="false"
+          size="small">
+        </rive-player>
+      </div>
+      }
     </div>
-    }
   </div>
 </ion-content>

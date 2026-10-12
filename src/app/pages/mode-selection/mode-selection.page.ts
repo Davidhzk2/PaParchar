@@ -1,6 +1,9 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, NgZone, OnDestroy, Signal, ViewChild, signal } from '@angular/core';
+import { ModalController } from '@ionic/angular/lazy';
 import { Player } from '../../core/models/player.model';
+import { GameId, IntensityId } from '../../core/models/game-state.model';
+import { GameStateService } from '../../core/services/game-state.service';
+import { AddUserModalComponent } from '../../features/add-user-modal/add-user-modal.component';
 import { RiveIntensityComponent } from '../../features/riveAnimation/intensity/intensitycomponent.';
 
 /*
@@ -23,16 +26,13 @@ import { RiveIntensityComponent } from '../../features/riveAnimation/intensity/i
  * ============================================================================
  */
 
-type IntensityId = 'romper-hielo' | 'beber' | 'parchar' | 'calentar' | 'gozar';
-type GameId = 'barajas' | 'ruleta' | 'tablero';
-
 @Component({
   selector: 'app-mode-selection',
   templateUrl: './mode-selection.page.html',
   styleUrls: ['./mode-selection.page.scss'],
   standalone: false,
 })
-export class ModeSelectionPage implements OnInit, AfterViewInit, OnDestroy {
+export class ModeSelectionPage implements AfterViewInit, OnDestroy {
 
   // ==========================================================================
   //  REFERENCIAS AL DOM
@@ -82,13 +82,13 @@ export class ModeSelectionPage implements OnInit, AfterViewInit, OnDestroy {
     { id: 'tablero', label: 'Tablero' },
   ];
 
-  players: Player[] = [];
+  readonly players: Signal<Player[]>;
+  readonly isAddUserModalOpen = signal(false);
 
   // ==========================================================================
   //  [SELECCIÓN]
   // ==========================================================================
 
-  private _selectedIntensity: IntensityId = 'romper-hielo';
   activeIntensity: IntensityId | null = null;       // la que recibe el Rive
   private readonly RIVE_DWELL_MS = 350;               // tiempo quieto antes de activar
   private dwellTimer?: ReturnType<typeof setTimeout>;
@@ -96,19 +96,25 @@ export class ModeSelectionPage implements OnInit, AfterViewInit, OnDestroy {
 
   /** Intensidad activa. El HTML la usa para [class.selected] y data-intensity (fondo). */
   get selectedIntensity(): IntensityId {
-    return this._selectedIntensity;
+    return this.gameState.selectedIntensity();
   }
 
   set selectedIntensity(id: IntensityId) {
-    if (id === this._selectedIntensity) return;
-    this._selectedIntensity = id;
+    if (id === this.gameState.selectedIntensity()) return;
+    this.gameState.setSelectedIntensity(id);
     this.clearShake();
 
     clearTimeout(this.dwellTimer);
     this.dwellTimer = setTimeout(() => this.riveIntensity?.setActive(id), this.RIVE_DWELL_MS);
   }
 
-  selectedGame: GameId = 'barajas';
+  get selectedGame(): GameId {
+    return this.gameState.selectedGame();
+  }
+
+  set selectedGame(id: GameId) {
+    this.gameState.setSelectedGame(id);
+  }
 
   // ==========================================================================
   //  [LAYOUT] estado de la vista
@@ -165,17 +171,34 @@ export class ModeSelectionPage implements OnInit, AfterViewInit, OnDestroy {
   // ==========================================================================
 
   constructor(
-    private router: Router,
     private ngZone: NgZone,
     private cdr: ChangeDetectorRef,
-  ) { }
+    private modalCtrl: ModalController,
+    private gameState: GameStateService,
+  ) {
+    this.players = this.gameState.players;
+  }
 
-  /** [DATOS] Recupera los jugadores enviados desde la pantalla anterior. */
-  ngOnInit() {
-    const navigationPlayers = this.router.getCurrentNavigation()?.extras.state?.['players'];
-    const historyPlayers = window.history.state?.players;
-    const players = navigationPlayers ?? historyPlayers;
-    this.players = this.isPlayerList(players) ? players : [];
+  async openAddUserModal() {
+    if (this.isAddUserModalOpen()) return;
+
+    this.isAddUserModalOpen.set(true);
+
+    try {
+      const addUserModal = await this.modalCtrl.create({
+        component: AddUserModalComponent,
+        cssClass: 'addModal',
+      });
+      const dismissed = addUserModal.onDidDismiss<Player>();
+
+      await addUserModal.present();
+      const { data, role } = await dismissed;
+      if (role === 'confirm' && data) {
+        this.ngZone.run(() => this.gameState.addPlayer(data));
+      }
+    } finally {
+      this.isAddUserModalOpen.set(false);
+    }
   }
 
   ngAfterViewInit() {
@@ -545,28 +568,4 @@ export class ModeSelectionPage implements OnInit, AfterViewInit, OnDestroy {
     }, duration + 50);
   }
 
-  // ==========================================================================
-  //  [DATOS] validación de los jugadores recibidos por navegación
-  // ==========================================================================
-
-  private isPlayerList(value: unknown): value is Player[] {
-    return Array.isArray(value) && value.every((player: unknown) => {
-      if (typeof player !== 'object' || player === null) return false;
-
-      const candidate = player as Record<string, unknown>;
-      const avatar = candidate['avatar'];
-      if (typeof avatar !== 'object' || avatar === null) return false;
-
-      const candidateAvatar = avatar as Record<string, unknown>;
-      return typeof candidate['name'] === 'string'
-        && (candidate['gender'] === 'male' || candidate['gender'] === 'female')
-        && (candidate['preferGender'] === 'male'
-          || candidate['preferGender'] === 'female'
-          || candidate['preferGender'] === 'both')
-        && typeof candidateAvatar['src'] === 'string'
-        && typeof candidateAvatar['artboard'] === 'string'
-        && typeof candidateAvatar['stateMachine'] === 'string'
-        && (candidateAvatar['gender'] === 'male' || candidateAvatar['gender'] === 'female');
-    });
-  }
 }

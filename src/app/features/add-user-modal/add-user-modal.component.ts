@@ -1,13 +1,17 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { ModalController } from '@ionic/angular/lazy';
+import { FormsModule } from '@angular/forms';
+import { IonicModule, ModalController } from '@ionic/angular/lazy';
 import { Avatar, Gender } from '../../core/models/player.model';
 import { mockAvatars } from '../../data/mockdata';
+import { RivePreviewComponent } from '../riveAnimation/player/player.component';
 
 @Component({
   selector: 'app-add-user-modal',
   templateUrl: './add-user-modal.component.html',
   styleUrls: ['./add-user-modal.component.scss'],
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, FormsModule, IonicModule, RivePreviewComponent],
 })
 export class AddUserModalComponent {
   avatars: Avatar[] = mockAvatars;

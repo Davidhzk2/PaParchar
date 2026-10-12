@@ -70,6 +70,10 @@ export class RivePreviewComponent implements AfterViewInit, OnChanges, OnDestroy
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    if (this.viewInitialized && changes['isIdle']) {
+      this.applyState();
+    }
+
     if (
       this.viewInitialized &&
       (changes['src'] || changes['artboard'] || changes['stateMachine'])
