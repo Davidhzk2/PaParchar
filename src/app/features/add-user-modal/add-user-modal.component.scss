@@ -380,6 +380,36 @@
   }
 }
 
+.modalAdd__actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  width: 100%;
+
+  .btnPrimary,
+  .btnDelete {
+    width: auto;
+    min-width: 0;
+    flex: 1;
+  }
+
+  .btnDelete {
+    height: 3.1rem;
+    border: 4px solid #41091F;
+    border-radius: 1.5rem;
+    background: #FF465B;
+    color: #FFF;
+    box-shadow: inset 0 -6px 0 rgba(0, 0, 0, 0.2);
+
+    h4 {
+      font-size: 1.6rem;
+      -webkit-text-stroke: 0.25rem #41091F;
+      text-shadow: 3px 3px 0 #41091F;
+    }
+  }
+}
+
 .namePlayer {
   width: 100%;
   padding: 9px 11px;

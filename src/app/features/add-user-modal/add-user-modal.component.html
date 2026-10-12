@@ -123,11 +123,19 @@
 
       </div>
 
-      <button class="btnPrimary" type="button" (click)="addPlayer()">
-        <h4>
-          Agregar Jugador
-        </h4>
-      </button>
+      <div class="modalAdd__actions">
+        @if (edit) {
+        <button class="btnDelete" type="button" (click)="deletePlayer()">
+          <h4>Eliminar jugador</h4>
+        </button>
+        }
+
+        <button class="btnPrimary" type="button" (click)="addPlayer()">
+          <h4>
+            {{ edit ? 'Guardar cambios' : 'Agregar Jugador' }}
+          </h4>
+        </button>
+      </div>
     </div>
 
 

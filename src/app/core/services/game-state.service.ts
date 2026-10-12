@@ -27,6 +27,13 @@ export class GameStateService {
     this.stateSignal.update(state => ({ ...state, players: [...state.players, player] }));
   }
 
+  updatePlayer(currentPlayer: Player, updatedPlayer: Player): void {
+    this.stateSignal.update(state => ({
+      ...state,
+      players: state.players.map(player => player === currentPlayer ? updatedPlayer : player),
+    }));
+  }
+
   removePlayer(player: Player): void {
     this.stateSignal.update(state => ({
       ...state,

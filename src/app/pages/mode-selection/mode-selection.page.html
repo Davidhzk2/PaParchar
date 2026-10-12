@@ -69,12 +69,13 @@
 
     <div class="players-scroll" aria-label="Lista de jugadores">
       @for (player of players(); track $index) {
-      <div class="player-avatar" [attr.aria-label]="player.name">
+      <button type="button" class="player-avatar" [attr.aria-label]="'Editar jugador ' + player.name"
+        (click)="openAddUserModal(player)">
         <rive-player [src]="player.avatar.src" [artboard]="player.avatar.artboard"
           [stateMachine]="player.avatar.stateMachine" [isIdle]="true" [gender]="player.gender" [showGender]="false"
           size="small">
         </rive-player>
-      </div>
+      </button>
       }
     </div>
   </div>

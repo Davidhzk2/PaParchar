@@ -179,7 +179,7 @@ export class ModeSelectionPage implements AfterViewInit, OnDestroy {
     this.players = this.gameState.players;
   }
 
-  async openAddUserModal() {
+  async openAddUserModal(playerToEdit?: Player) {
     if (this.isAddUserModalOpen()) return;
 
     this.isAddUserModalOpen.set(true);
@@ -188,13 +188,25 @@ export class ModeSelectionPage implements AfterViewInit, OnDestroy {
       const addUserModal = await this.modalCtrl.create({
         component: AddUserModalComponent,
         cssClass: 'addModal',
+        componentProps: {
+          edit: !!playerToEdit,
+          player: playerToEdit,
+        },
       });
       const dismissed = addUserModal.onDidDismiss<Player>();
 
       await addUserModal.present();
       const { data, role } = await dismissed;
-      if (role === 'confirm' && data) {
-        this.ngZone.run(() => this.gameState.addPlayer(data));
+      if (role === 'delete' && playerToEdit) {
+        this.ngZone.run(() => this.gameState.removePlayer(playerToEdit));
+      } else if (data && (role === 'confirm' || role === 'update')) {
+        this.ngZone.run(() => {
+          if (role === 'update' && playerToEdit) {
+            this.gameState.updatePlayer(playerToEdit, data);
+          } else {
+            this.gameState.addPlayer(data);
+          }
+        });
       }
     } finally {
       this.isAddUserModalOpen.set(false);
