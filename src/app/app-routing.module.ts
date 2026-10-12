@@ -15,6 +15,10 @@ const routes: Routes = [
   {
     path: 'mode-selection',
     loadChildren: () => import('./pages/mode-selection/mode-selection.module').then( m => m.ModeSelectionPageModule)
+  },
+  {
+    path: 'game',
+    loadChildren: () => import('./pages/game/game.module').then(m => m.GamePageModule)
   }
 ];
 

@@ -1,0 +1,188 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+.game-content {
+  --background:
+    radial-gradient(ellipse at 50% 20%, rgb(96 211 255 / 75%), transparent 62%),
+    repeating-linear-gradient(45deg, transparent 0 2.15rem, rgb(255 255 255 / 5%) 2.2rem 2.3rem),
+    repeating-linear-gradient(-45deg, transparent 0 2.15rem, rgb(0 54 133 / 7%) 2.2rem 2.3rem),
+    linear-gradient(155deg, #48ccff 0%, #16a6f1 54%, #087bc8 100%);
+  color: #fff;
+
+  &[data-intensity='beber'] {
+    --background:
+      radial-gradient(ellipse at 50% 20%, rgb(255 255 255 / 50%), transparent 62%),
+      repeating-linear-gradient(45deg, transparent 0 2.15rem, rgb(255 255 255 / 10%) 2.2rem 2.3rem),
+      repeating-linear-gradient(-45deg, transparent 0 2.15rem, rgb(135 69 0 / 7%) 2.2rem 2.3rem),
+      linear-gradient(155deg, #fdf2dc 0%, #fdc202 54%, #ff8e01 100%);
+    color: #40204d;
+  }
+
+  &[data-intensity='parchar'] {
+    --background:
+      radial-gradient(ellipse at 50% 20%, rgb(255 137 200 / 48%), transparent 62%),
+      repeating-linear-gradient(45deg, transparent 0 2.15rem, rgb(255 255 255 / 7%) 2.2rem 2.3rem),
+      repeating-linear-gradient(-45deg, transparent 0 2.15rem, rgb(43 0 67 / 9%) 2.2rem 2.3rem),
+      linear-gradient(155deg, #c91c61 0%, #b92782 54%, #7440a2 100%);
+  }
+
+  &[data-intensity='calentar'] {
+    --background:
+      radial-gradient(ellipse at 50% 20%, rgb(255 123 0 / 42%), transparent 62%),
+      repeating-linear-gradient(45deg, transparent 0 2.15rem, rgb(255 255 255 / 6%) 2.2rem 2.3rem),
+      repeating-linear-gradient(-45deg, transparent 0 2.15rem, rgb(0 0 0 / 12%) 2.2rem 2.3rem),
+      linear-gradient(155deg, #3b0025 0%, #84002e 54%, #ff7b00 100%);
+  }
+
+  &[data-intensity='gozar'] {
+    --background:
+      radial-gradient(ellipse at 50% 20%, rgb(116 59 182 / 38%), transparent 62%),
+      repeating-linear-gradient(45deg, transparent 0 2.15rem, rgb(255 255 255 / 5%) 2.2rem 2.3rem),
+      repeating-linear-gradient(-45deg, transparent 0 2.15rem, rgb(147 93 207 / 8%) 2.2rem 2.3rem),
+      linear-gradient(155deg, #1a083b 0%, #0c0715 100%);
+  }
+}
+
+.game-page {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  padding: max(1rem, env(safe-area-inset-top)) 1rem max(1.25rem, env(safe-area-inset-bottom));
+}
+
+.players-stage {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(0.75rem, 5vw, 2rem);
+  width: 100%;
+  padding: 0.5rem 0 1rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.player-seat {
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+}
+
+.player-avatar {
+  display: grid;
+  width: 60px;
+  height: 60px;
+  place-items: center;
+
+  .player-seat--current & {
+    width: 88px;
+    height: 88px;
+  }
+
+  rive-player {
+    display: block;
+    flex: 0 0 auto;
+  }
+}
+
+.player-name {
+  max-width: 5.5rem;
+  overflow: hidden;
+  color: inherit;
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-overflow: ellipsis;
+  text-shadow: 0 2px 0 #40204d, 1px 0 0 #40204d, -1px 0 0 #40204d;
+  white-space: nowrap;
+}
+
+.cards-table {
+  display: grid;
+  flex: 1 1 auto;
+  min-height: 0;
+  place-items: center;
+  padding: 0.5rem 0 1rem;
+  perspective: 60rem;
+}
+
+.card-deck {
+  position: relative;
+  width: min(62vw, 15rem);
+  height: min(48vh, 23rem);
+  min-height: 14rem;
+}
+
+.deck-card {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 3px solid #fff;
+  border-radius: 1rem;
+  object-fit: cover;
+  box-shadow: 0 0.65rem 1rem rgb(0 0 0 / 28%);
+
+  &:nth-child(1) {
+    transform: translate(-0.7rem, 0.55rem) rotate(-10deg);
+  }
+
+  &:nth-child(2) {
+    transform: translate(-0.35rem, 0.25rem) rotate(-5deg);
+  }
+
+  &:nth-child(3) {
+    transform: translate(0, 0.1rem) rotate(0deg);
+  }
+
+  &:nth-child(4) {
+    transform: translate(0.35rem, 0.25rem) rotate(5deg);
+  }
+
+  &:nth-child(5) {
+    transform: translate(0.7rem, 0.55rem) rotate(10deg);
+  }
+}
+
+.game-placeholder {
+  display: grid;
+  flex: 1;
+  place-items: center;
+  text-align: center;
+}
+
+.game-footer {
+  display: flex;
+  flex: 0 0 auto;
+  justify-content: center;
+  padding-top: 0.5rem;
+}
+
+.back-button {
+  min-width: 8rem;
+  border: 3px solid #40204d;
+  border-radius: 999px;
+  padding: 0.45rem 1.2rem 0.65rem;
+  background: #d4146d;
+  box-shadow: inset 0 -0.35rem 0 rgb(0 0 0 / 18%), 0 0.25rem 0 #641a50;
+  color: #fff;
+  font: inherit;
+  font-size: 1.25rem;
+  font-weight: 900;
+  -webkit-text-stroke: 1px #40204d;
+  text-shadow: 2px 2px 0 #40204d, -1px -1px 0 #40204d;
+  cursor: pointer;
+
+  &:active {
+    transform: translateY(2px);
+    box-shadow: inset 0 -0.2rem 0 rgb(0 0 0 / 18%), 0 0.1rem 0 #641a50;
+  }
+}

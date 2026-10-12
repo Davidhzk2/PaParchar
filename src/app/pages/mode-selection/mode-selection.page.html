@@ -36,7 +36,7 @@
         <button type="button" class="game-option" [class.selected]="selectedGame === game.id"
           [class.game-option--cards]="game.id === 'barajas'" [class.game-option--roulette]="game.id === 'ruleta'"
           [class.game-option--board]="game.id === 'tablero'" [attr.aria-pressed]="selectedGame === game.id"
-          (click)="selectedGame = game.id">
+          (click)="onGameSelected(game.id)">
 
           @if (game.id === 'ruleta') {
           <img src="assets/Juegos/Ruleta/RuletaBg.png" alt="">

@@ -1,5 +1,5 @@
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, NgZone, OnDestroy, Signal, ViewChild, signal } from '@angular/core';
-import { ModalController } from '@ionic/angular/lazy';
+import { ModalController, NavController, ToastController } from '@ionic/angular/lazy';
 import { Player } from '../../core/models/player.model';
 import { GameId, IntensityId } from '../../core/models/game-state.model';
 import { GameStateService } from '../../core/services/game-state.service';
@@ -175,8 +175,26 @@ export class ModeSelectionPage implements AfterViewInit, OnDestroy {
     private cdr: ChangeDetectorRef,
     private modalCtrl: ModalController,
     private gameState: GameStateService,
+    private navCtrl: NavController,
+    private toastCtrl: ToastController,
   ) {
     this.players = this.gameState.players;
+  }
+
+  async onGameSelected(game: GameId): Promise<void> {
+    this.selectedGame = game;
+
+    if (this.players().length < 2) {
+      const toast = await this.toastCtrl.create({
+        message: 'Agrega al menos 2 jugadores para empezar.',
+        duration: 2500,
+        position: 'bottom',
+      });
+      await toast.present();
+      return;
+    }
+
+    await this.navCtrl.navigateForward(['/game']);
   }
 
   async openAddUserModal(playerToEdit?: Player) {
