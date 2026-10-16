@@ -1,37 +1,43 @@
 <ion-content [fullscreen]="true" class="game-content" [attr.data-intensity]="selectedIntensity()">
   <main class="game-page">
-    <section class="players-stage" aria-label="Jugadores">
-      @for (item of playerStage(); track item.position) {
-      <div class="player-seat" [class.player-seat--current]="item.position === 'current'">
-        <div class="player-avatar">
-          <rive-player [src]="item.player.avatar.src" [artboard]="item.player.avatar.artboard"
-            [stateMachine]="item.player.avatar.stateMachine" [gender]="item.player.gender" [showGender]="false"
-            [isIdle]="true" [size]="item.size">
-          </rive-player>
+    <img src="/assets/Juegos/Baraja/bg.png" class="bgGame" alt="">
+    <section class="playersContainer" aria-label="Jugadores">
+      <h2>Es el turno de</h2>
+      <div class="playersWrapper">
+        @for (item of playerStage(); track item.position) {
+        <div class="player-seat" [class.player-seat--current]="item.position === 'current'">
+
+          <span>{{ item.player.name }}</span>
+          <div class="player-avatar">
+            <rive-player [src]="item.player.avatar.src" [artboard]="item.player.avatar.artboard"
+              [stateMachine]="item.player.avatar.stateMachine" [gender]="item.player.gender" [showGender]="false"
+              [isIdle]="true">
+            </rive-player>
+          </div>
         </div>
-        <span class="player-name">{{ item.player.name }}</span>
+        }
       </div>
-      }
     </section>
 
     @if (selectedGame() === 'barajas') {
     <section class="cards-table" aria-label="Mazo de cartas">
       <div class="card-deck" aria-hidden="true">
         @for (card of deckCards; track $index) {
-        <img class="deck-card" src="assets/Juegos/Baraja/Reverso.png" alt="">
+        <img class="deck-card" src="assets/Juegos/Ruleta/Reverso.png" alt="">
         }
       </div>
     </section>
+
     } @else {
-    <section class="game-placeholder" aria-live="polite">
-      <p>{{ gameLabel }} estará disponible próximamente.</p>
+    <section class="roulette" aria-live="polite">
+        <img src="assets/Juegos/Ruleta/Ruleta.png" alt="">
     </section>
     }
 
-    <footer class="game-footer">
-      <button type="button" class="back-button" (click)="goBack()">
+    <button type="button" class="btnPrimary" (click)="goBack()">
+      <h4>
         Regresar
-      </button>
-    </footer>
+      </h4>
+    </button>
   </main>
 </ion-content>
