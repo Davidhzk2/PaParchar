@@ -3,6 +3,7 @@ import { ModalController, NavController, ToastController } from '@ionic/angular/
 import { Player } from '../../core/models/player.model';
 import { GameId, IntensityId } from '../../core/models/game-state.model';
 import { GameStateService } from '../../core/services/game-state.service';
+import { GameSessionService } from '../../core/services/game-session.service';
 import { AddUserModalComponent } from '../../features/add-user-modal/add-user-modal.component';
 import { RiveIntensityComponent } from '../../features/riveAnimation/intensity/intensitycomponent.';
 
@@ -175,6 +176,7 @@ export class ModeSelectionPage implements AfterViewInit, OnDestroy {
     private cdr: ChangeDetectorRef,
     private modalCtrl: ModalController,
     private gameState: GameStateService,
+    private gameSession: GameSessionService,
     private navCtrl: NavController,
     private toastCtrl: ToastController,
   ) {
@@ -194,6 +196,7 @@ export class ModeSelectionPage implements AfterViewInit, OnDestroy {
       return;
     }
 
+    this.gameSession.startSession();
     await this.navCtrl.navigateForward(['/game']);
   }
 

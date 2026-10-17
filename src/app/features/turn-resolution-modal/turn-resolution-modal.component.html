@@ -1,0 +1,23 @@
+<section class="turn-modal" aria-labelledby="activity-title">
+  <button type="button" class="close-button" aria-label="Cerrar" (click)="close()">×</button>
+
+  <div class="player">
+    <rive-player [src]="player.avatar.src" [artboard]="player.avatar.artboard"
+      [stateMachine]="player.avatar.stateMachine" [gender]="player.gender" [showGender]="false" [isIdle]="true"
+      size="medium">
+    </rive-player>
+    <h2>{{ player.name }}</h2>
+  </div>
+
+  <article class="activity">
+    <img class="activity-card" [src]="activity.image" [alt]="'Carta de ' + activity.category">
+    <h3 id="activity-title">{{ activity.category }}</h3>
+    <p>{{ activity.prompt }}</p>
+  </article>
+
+  <p class="question">¿Cumplió la actividad?</p>
+  <div class="actions">
+    <button type="button" class="outcome outcome--no" (click)="resolveTurn(false)">No cumplió</button>
+    <button type="button" class="outcome outcome--yes" (click)="resolveTurn(true)">Cumplió</button>
+  </div>
+</section>

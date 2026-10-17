@@ -87,6 +87,25 @@ button {
 	}
 }
 
+.turn-resolution-modal {
+	--width: min(92vw, 28rem);
+	--height: auto;
+	--background: transparent;
+	--box-shadow: none;
+	--backdrop-opacity: 0.6;
+
+	&::part(content) {
+		background: transparent;
+		box-shadow: none;
+	}
+
+	.ion-page {
+		position: relative;
+		display: block;
+		height: auto;
+	}
+}
+
 .btnPrimary {
 	position: relative;
 

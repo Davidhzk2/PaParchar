@@ -1,0 +1,110 @@
+:host {
+  display: block;
+}
+
+.turn-modal {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.9rem;
+  width: min(100%, 25rem);
+  margin-inline: auto;
+  border: 3px solid #54266e;
+  border-radius: 1.5rem;
+  padding: 1.25rem;
+  background: #fff8ef;
+  color: #40204d;
+  text-align: center;
+  box-shadow: 0 0.6rem 1.5rem rgb(0 0 0 / 28%);
+}
+
+.close-button {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.65rem;
+  border: 0;
+  background: transparent;
+  color: #54266e;
+  font-size: 1.8rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.player {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+
+  h2 {
+    margin: 0;
+    font-size: 1.25rem;
+  }
+}
+
+.activity {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  align-items: center;
+  gap: 0.25rem 0.75rem;
+  width: 100%;
+  text-align: left;
+
+  h3 {
+    margin: 0;
+    font-size: 1.35rem;
+  }
+
+  p {
+    grid-column: 1 / -1;
+    margin: 0.35rem 0 0;
+    font-size: 1.1rem;
+    line-height: 1.35;
+  }
+}
+
+.activity-card {
+  grid-row: span 2;
+  width: 4.5rem;
+  border-radius: 0.6rem;
+  box-shadow: 0 0.2rem 0.5rem rgb(0 0 0 / 18%);
+}
+
+.question {
+  margin: 0.25rem 0 0;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.actions {
+  display: flex;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.outcome {
+  flex: 1;
+  min-height: 2.8rem;
+  border: 2px solid #40204d;
+  border-radius: 999px;
+  color: #fff;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+
+  &--no {
+    background: #d4146d;
+  }
+
+  &--yes {
+    background: #198754;
+  }
+}
+
+@media (max-height: 700px) {
+  .turn-modal {
+    gap: 0.5rem;
+    padding: 0.8rem;
+  }
+}

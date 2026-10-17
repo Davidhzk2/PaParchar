@@ -21,11 +21,19 @@
 
     @if (selectedGame() === 'barajas') {
     <section class="cards-table" aria-label="Mazo de cartas">
-      <div class="card-deck" aria-hidden="true">
+      <button type="button" class="card-deck" [class.card-deck--revealed]="revealedActivity()"
+        [class.card-deck--revealing]="isRevealingCard()" [disabled]="isResolvingTurn() || isRevealingCard()"
+        [attr.aria-label]="revealedActivity() ? 'Ver actividad revelada' : 'Sacar una carta'"
+        (click)="onDeckClick()">
+        @if (revealedActivity(); as activity) {
+        <img class="revealed-card" [src]="activity.image" [alt]="'Carta de ' + activity.category">
+        <span class="revealed-prompt">{{ activity.prompt }}</span>
+        } @else {
         @for (card of deckCards; track $index) {
-        <img class="deck-card" src="assets/Juegos/Ruleta/Reverso.png" alt="">
+        <img class="deck-card" src="assets/Juegos/Baraja/Reverso.png" alt="">
         }
-      </div>
+        }
+      </button>
     </section>
 
     } @else {
