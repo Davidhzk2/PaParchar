@@ -6,105 +6,79 @@
   position: relative;
   display: flex;
   flex-direction: column;
+  gap: 1rem;
   align-items: center;
-  gap: 0.9rem;
-  width: min(100%, 25rem);
-  margin-inline: auto;
-  border: 3px solid #54266e;
-  border-radius: 1.5rem;
-  padding: 1.25rem;
-  background: #fff8ef;
-  color: #40204d;
-  text-align: center;
-  box-shadow: 0 0.6rem 1.5rem rgb(0 0 0 / 28%);
-}
+  overflow: visible;
+  padding: 0 1.2rem 1rem 1.2rem;
 
-.close-button {
-  position: absolute;
-  top: 0.5rem;
-  right: 0.65rem;
-  border: 0;
-  background: transparent;
-  color: #54266e;
-  font-size: 1.8rem;
-  line-height: 1;
-  cursor: pointer;
+  svg {
+    position: absolute;
+    bottom: 0;
+    z-index: -1;
+    width: 100%;
+    overflow: visible;
+
+    path {
+      fill: white;
+      stroke: #0078b6;
+      stroke-width: 5px;
+    }
+  }
 }
 
 .player {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.25rem;
 
-  h2 {
-    margin: 0;
-    font-size: 1.25rem;
-  }
-}
-
-.activity {
-  display: grid;
-  grid-template-columns: 4.5rem 1fr;
-  align-items: center;
-  gap: 0.25rem 0.75rem;
-  width: 100%;
-  text-align: left;
-
-  h3 {
-    margin: 0;
-    font-size: 1.35rem;
+  img {
+    position: relative;
+    z-index: 1;
+    width: 9rem;
+    margin-top: -2rem;
   }
 
-  p {
-    grid-column: 1 / -1;
-    margin: 0.35rem 0 0;
-    font-size: 1.1rem;
-    line-height: 1.35;
-  }
 }
 
-.activity-card {
-  grid-row: span 2;
-  width: 4.5rem;
-  border-radius: 0.6rem;
-  box-shadow: 0 0.2rem 0.5rem rgb(0 0 0 / 18%);
-}
-
-.question {
-  margin: 0.25rem 0 0;
-  font-size: 1rem;
-  font-weight: 700;
+.textActivity{
+  text-align: center;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: black;
 }
 
 .actions {
   display: flex;
   gap: 0.75rem;
   width: 100%;
-}
 
-.outcome {
-  flex: 1;
-  min-height: 2.8rem;
-  border: 2px solid #40204d;
-  border-radius: 999px;
-  color: #fff;
-  font: inherit;
-  font-weight: 700;
-  cursor: pointer;
+  .btnPrimary {
+    height: 3.3rem;
+    border-width: 3px;
 
-  &--no {
-    background: #d4146d;
-  }
+    h4 {
+      top: 0.4rem;
+      font-size: 1.8rem;
 
-  &--yes {
-    background: #198754;
-  }
-}
+    }
 
-@media (max-height: 700px) {
-  .turn-modal {
-    gap: 0.5rem;
-    padding: 0.8rem;
+
+    &.yes {
+
+      h4 {
+        -webkit-text-stroke: 0.4rem #40204D;
+        text-shadow: 0.2rem 0.2rem 0 #40204D,
+          0.3rem 0.2rem 0 #40204D;
+      }
+    }
+
+    &.no {
+      background-color: #0091CF;
+      border-color: #002B3E;
+      box-shadow: inset 0 -6px 0 #0073A4;
+
+      h4 {
+        -webkit-text-stroke: 0.4rem #002B3E;
+        text-shadow: 0.2rem 0.2rem 0 #002B3E,
+          0.3rem 0.2rem 0 #002B3E;
+      }
+    }
   }
 }

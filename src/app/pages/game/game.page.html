@@ -27,7 +27,6 @@
         (click)="onDeckClick()">
         @if (revealedActivity(); as activity) {
         <img class="revealed-card" [src]="activity.image" [alt]="'Carta de ' + activity.category">
-        <span class="revealed-prompt">{{ activity.prompt }}</span>
         } @else {
         @for (card of deckCards; track $index) {
         <img class="deck-card" src="assets/Juegos/Baraja/Reverso.png" alt="">
