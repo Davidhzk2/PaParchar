@@ -1,6 +1,7 @@
 <ion-content [fullscreen]="true" class="game-content" [attr.data-intensity]="selectedIntensity()">
   <main class="game-page">
-    <img src="/assets/Juegos/Baraja/bg.png" class="bgGame" alt="">
+    <img [src]="selectedGame() === 'ruleta' ? 'assets/Juegos/Ruleta/bg.png' : 'assets/Juegos/Baraja/bg.png'"
+      class="bgGame" alt="">
     <section class="playersContainer" aria-label="Jugadores">
       <h2>Es el turno de</h2>
       <div class="playersWrapper">
@@ -11,7 +12,7 @@
           <div class="player-avatar">
             <rive-player [src]="item.player.avatar.src" [artboard]="item.player.avatar.artboard"
               [stateMachine]="item.player.avatar.stateMachine" [gender]="item.player.gender" [showGender]="false"
-              [isIdle]="true">
+              [isIdle]="item.position === 'current'">
             </rive-player>
           </div>
         </div>
@@ -35,9 +36,22 @@
       </button>
     </section>
 
+    } @else if (selectedGame() === 'ruleta') {
+    <section class="roulette" aria-label="Ruleta de categorías">
+      <button type="button" class="roulette-spin" [class.roulette-spin--spinning]="isSpinningRoulette()"
+        [style.--spin-start-rotation]="rouletteStartRotation() + 'deg'"
+        [style.--spin-rotation]="rouletteRotation() + 'deg'"
+        [disabled]="isSpinningRoulette() || isRouletteResultPending() || isResolvingTurn()"
+        [attr.aria-label]="isSpinningRoulette() ? 'Girando la ruleta' : isRouletteResultPending() ? 'Preparando el resultado' : 'Girar la ruleta'"
+        (click)="onRouletteClick()">
+        <img class="roulette-wheel" src="assets/Juegos/Ruleta/Ruleta.png" alt="">
+        <img class="roulette-center" src="assets/Juegos/Ruleta/Ruleta-centro.png" alt="">
+        <img class="roulette-indicator" src="assets/Juegos/Ruleta/Ruleta-indicaod.png" alt="">
+      </button>
+    </section>
     } @else {
     <section class="roulette" aria-live="polite">
-        <img src="assets/Juegos/Ruleta/Ruleta.png" alt="">
+      <img src="assets/Juegos/Ruleta/Ruleta.png" alt="">
     </section>
     }
 

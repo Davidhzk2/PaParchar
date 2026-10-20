@@ -46,6 +46,27 @@ export class GameSessionService {
     return activity;
   }
 
+  drawActivityForCategory(category: string): TurnActivity {
+    if (!this.started()) this.startSession();
+
+    const currentActivity = this.revealedActivity();
+    if (currentActivity) return currentActivity;
+
+    let activityIndex = this.deck.findIndex(activity => activity.category === category);
+    if (activityIndex === -1) {
+      this.deck = this.shuffle([...CARD_ACTIVITIES]);
+      activityIndex = this.deck.findIndex(activity => activity.category === category);
+    }
+
+    if (activityIndex === -1) {
+      throw new Error(`No card activities are available for category "${category}".`);
+    }
+
+    const [activity] = this.deck.splice(activityIndex, 1);
+    this.revealedActivity.set(activity);
+    return activity;
+  }
+
   completeTurn(playerCount: number): void {
     this.revealedActivity.set(null);
     if (playerCount > 0) {

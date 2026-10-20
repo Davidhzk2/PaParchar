@@ -138,6 +138,79 @@
   place-items: center;
 }
 
+.roulette {
+  flex: 1;
+  display: grid;
+  min-height: 0;
+  place-items: center;
+
+  > img {
+    width: min(76vw, 380px);
+  }
+}
+
+.roulette-spin {
+  position: relative;
+  display: block;
+  width: min(76vw, 380px);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  aspect-ratio: 1;
+
+  &:disabled {
+    cursor: default;
+  }
+}
+
+.roulette-wheel,
+.roulette-center,
+.roulette-indicator {
+  position: absolute;
+  display: block;
+  pointer-events: none;
+}
+
+.roulette-wheel {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: rotate(var(--spin-rotation));
+}
+
+.roulette-spin--spinning .roulette-wheel {
+  animation: roulette-spin 2600ms cubic-bezier(0.08, 0.76, 0.18, 1) both;
+}
+
+.roulette-center {
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  width: 17%;
+  height: 17%;
+  transform: translate(-50%, -50%);
+}
+
+.roulette-indicator {
+  z-index: 2;
+  top: -4%;
+  left: 50%;
+  width: 15%;
+  height: 19%;
+  transform: translateX(-50%);
+}
+
+@keyframes roulette-spin {
+  from {
+    transform: rotate(var(--spin-start-rotation));
+  }
+
+  to {
+    transform: rotate(var(--spin-rotation));
+  }
+}
+
 .card-deck {
   position: relative;
   display: block;

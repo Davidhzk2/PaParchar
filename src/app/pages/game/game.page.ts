@@ -22,6 +22,18 @@ interface PlayerStageItem {
   size: PlayerStageSize;
 }
 
+const ROULETTE_CATEGORIES = [
+  { category: 'Verdad', color: '#c9e98a' },
+  { category: 'Reto', color: '#1e1e1e' },
+  { category: 'Yo nunca', color: '#c9185d' },
+  { category: 'Probabilidad', color: '#ffe600' },
+  { category: 'Parche', color: '#bd4de8' },
+  { category: 'Bebé', color: '#ffad45' },
+] as const;
+
+const ROULETTE_SPIN_DURATION_MS = 2600;
+const ROULETTE_RESULT_DELAY_MS = 1000;
+
 @Component({
   selector: 'app-game',
   templateUrl: './game.page.html',
@@ -38,6 +50,10 @@ export class GamePage {
   readonly revealedActivity: Signal<TurnActivity | null>;
   readonly isResolvingTurn = signal(false);
   readonly isRevealingCard = signal(false);
+  readonly isSpinningRoulette = signal(false);
+  readonly isRouletteResultPending = signal(false);
+  readonly rouletteRotation = signal(0);
+  readonly rouletteStartRotation = signal(0);
 
   constructor(
     private gameState: GameStateService,
@@ -107,13 +123,52 @@ export class GamePage {
     await this.openTurnResolution(player, activity);
   }
 
-  private async openTurnResolution(player: Player, activity: TurnActivity): Promise<void> {
+  async onRouletteClick(): Promise<void> {
+    if (
+      this.isResolvingTurn() ||
+      this.isRevealingCard() ||
+      this.isSpinningRoulette() ||
+      this.isRouletteResultPending()
+    ) return;
+
+    const player = this.currentPlayer();
+    if (!player) return;
+
+    const selectedCategory = ROULETTE_CATEGORIES[
+      Math.floor(Math.random() * ROULETTE_CATEGORIES.length)
+    ];
+    this.rouletteStartRotation.set(this.rouletteRotation());
+    this.rouletteRotation.update(rotation => rotation + 1800 + Math.random() * 720);
+    this.isSpinningRoulette.set(true);
+
+    try {
+      await new Promise<void>(resolve => setTimeout(resolve, ROULETTE_SPIN_DURATION_MS));
+      this.isSpinningRoulette.set(false);
+      this.isRouletteResultPending.set(true);
+      await new Promise<void>(resolve => setTimeout(resolve, ROULETTE_RESULT_DELAY_MS));
+      const activity = this.gameSession.drawActivityForCategory(selectedCategory.category);
+      await this.openTurnResolution(player, activity, selectedCategory.color);
+    } finally {
+      this.isSpinningRoulette.set(false);
+      this.isRouletteResultPending.set(false);
+    }
+  }
+
+  private async openTurnResolution(
+    player: Player,
+    activity: TurnActivity,
+    categoryColor?: string,
+  ): Promise<void> {
     this.isResolvingTurn.set(true);
 
     try {
       const modal = await this.modalCtrl.create({
         component: TurnResolutionModalComponent,
-        componentProps: { player, activity },
+        componentProps: {
+          player,
+          activity,
+          ...(categoryColor ? { categoryColor } : {}),
+        },
         cssClass: 'turn-resolution-modal',
       });
       const dismissed = modal.onDidDismiss();
