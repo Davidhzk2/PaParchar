@@ -1,0 +1,445 @@
+:host {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.modalAdd__content {
+  position: relative;
+  width: 90%;
+
+  &.male {
+    .stop-a {
+      stop-color: #008BC6;
+    }
+
+    .stop-b {
+      stop-color: #643279;
+    }
+  }
+
+  &.female {
+    .stop-a {
+      stop-color: #FF465B;
+    }
+
+    .stop-b {
+      stop-color: #643279;
+    }
+  }
+}
+
+.modalAdd__playerInfo {
+  aspect-ratio: 315 / 500;
+
+  position: relative;
+  z-index: 2;
+
+  padding: 2rem 1rem;
+
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+
+  fieldset {
+    padding: 0;
+    border: 0;
+
+    legend {
+      font-size: 1.3rem;
+      color: #242424;
+      text-align: center;
+
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  .btnCancel {
+    background-color: #FF465B;
+    border: 3px solid #41091F;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    border-radius: 50%;
+    padding: 0.7rem;
+    box-shadow: inset 0 -6px 0 rgba(0, 0, 0, 0.2);
+
+    svg {
+      width: 23px;
+      fill: #FFF;
+
+      path {
+        stroke: #41091F;
+        stroke-width: 2px;
+      }
+    }
+  }
+}
+
+.modalAdd__player {
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 1.5rem;
+
+  .modalAdd__avatarName {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .modalAdd__genders{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+}
+
+.avatar-selector {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+
+
+  .arrow-button {
+    margin-top: 1rem;
+    background-color: #FDB44D;
+    border: 2px solid #40204D;
+    border-radius: 50%;
+    box-shadow: inset 0 -6px 0 rgba(0, 0, 0, 0.1);
+    padding: 0.4rem;
+
+    &:first-child {
+      svg {
+        rotate: 180deg;
+      }
+    }
+
+    svg {
+      width: 17px;
+      height: 17px;
+
+      path {
+        fill: #40204D;
+      }
+    }
+  }
+}
+
+.modalBase {
+  width: 100%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+
+  .stop-a,
+  .stop-b {
+    transition: stop-color 0.4s ease-in-out;
+  }
+
+  .baseGradient,
+  .baseContent {
+    aspect-ratio: 315 / 500;
+  }
+
+  .baseGradient {
+    width: 100%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 1;
+    transform: translate(-50%, -50%);
+
+    path {
+      fill: url(#gradDynamic);
+    }
+
+  }
+
+  .baseContent {
+    position: relative;
+    z-index: 2;
+    transform: scale(0.92);
+
+    path {
+      fill: #fff;
+    }
+  }
+}
+
+.genderSelect {
+
+  &.player {
+    .genderContainerInput {
+
+      label {
+
+        &.both {
+          padding: 0.5rem 0rem 0.4rem 0.5rem;
+          border-radius: 24px 12px 35px 16px;
+
+          &.selected {
+            padding-right: 1rem;
+          }
+        }
+
+        &.male {
+          padding: 0.5rem 0rem 0.4rem 0.5rem;
+          border-radius: 24px 12px 35px 16px;
+
+          &.selected {
+            padding-right: 1rem;
+          }
+        }
+
+        &.female {
+          padding: 0.5rem 0rem 0.4rem 0.5rem;
+          border-radius: 35px 16px 16px 14px;
+
+          &.selected {
+            padding-right: 0.5rem;
+          }
+
+        }
+      }
+    }
+  }
+
+  &.prefer {
+    .genderContainerInput {
+
+      label {
+
+        &.both,
+        &.male,
+        &.female {
+          &.selected {
+            border-radius: 16px;
+            transition: border-radius .3s ease-in-out;
+          }
+        }
+
+        &.both {
+          padding: 0.5rem 0rem 0.4rem 0.5rem;
+          border-radius: 35px 16px 16px 16px;
+
+          &.selected {
+            padding-right: 1rem;
+          }
+        }
+
+        &.male {
+          padding: 0.5rem 0rem 0.4rem 0.5rem;
+          border-radius: 16px 35px 16px 16px;
+
+          &.selected {
+            padding-right: 1rem;
+          }
+        }
+
+        &.female {
+          padding: 0.5rem 0rem 0.4rem 0.5rem;
+          border-radius: 35px 16px 16px 16px;
+
+          &.selected {
+            padding-right: 0.5rem;
+          }
+
+        }
+      }
+    }
+  }
+
+  .genderContainerInput {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+
+    label {
+      position: relative;
+      
+      --bgLabel: #F0F0F0;
+      --borderLabel: #F0F0F0;
+      --svgStroke: #F0F0F0;
+      --svgColor: #C3C3C3;
+
+      &.female {
+
+        &.selected {
+
+          --bgLabel: #D4394B;
+          --borderLabel: #8E1926;
+          --svgStroke: #8E1926;
+          --svgColor: #FFF;
+        }
+      }
+
+      &.male {
+
+        &.selected {
+
+          --bgLabel: #0091CF;
+          --borderLabel: #002B3E;
+          --svgStroke: #002B3E;
+          --svgColor: #FFF;
+        }
+      }
+
+      &.both {
+
+        &.selected {
+
+          --bgLabel: #944AB3;
+          --borderLabel: #40204D;
+          --svgStroke: #40204D;
+          --svgColor: #FFF;
+        }
+      }
+
+      svg {
+        overflow: visible;
+        width: 1.6rem;
+        fill: var(--svgColor);
+
+        path {
+          stroke-width: 3px;
+          stroke: var(--svgStroke);
+          paint-order: stroke fill;
+        }
+      }
+
+      input[type='radio'] {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        clip: rect(0, 0, 0, 0);
+      }
+    }
+  }
+
+  .genderButton {
+    border: solid 2px var(--borderLabel);
+    background-color: var(--bgLabel);
+
+    display: grid;
+    grid-template-columns: max-content 0fr;
+    gap: 0.3rem;
+
+    transition: grid-template-columns .5s cubic-bezier(0.075, 0.82, 0.165, 1);
+
+    &.selected {
+      grid-template-columns: max-content 1fr;
+      box-shadow: inset 0 -6px 0 rgba(0, 0, 0, 0.12);
+    }
+
+    span {
+      font-size: 1.3rem;
+      color: #FFF;
+
+      overflow: hidden;
+      white-space: nowrap;
+      min-width: 0;
+    }
+  }
+
+}
+
+.btnPrimary {
+  transform: scale(1);
+  width: 65%;
+  height: 3.1rem;
+  border: 4px solid #40204D;
+
+  h4 {
+    top: 0rem;
+    font-size: 2.1rem;
+    -webkit-text-stroke: 0.4rem #40204D;
+
+    text-shadow: 4px 4px 0 #40204D,
+      5px 5px 0 #40204D,
+      0px 0px 0 #40204D;
+  }
+}
+
+.modalAdd__actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  width: 100%;
+
+  .btnPrimary,
+  .btnDelete {
+    width: auto;
+    min-width: 0;
+    flex: 1;
+  }
+
+  .btnDelete {
+    height: 3.1rem;
+    border: 4px solid #41091F;
+    border-radius: 1.5rem;
+    background: #FF465B;
+    color: #FFF;
+    box-shadow: inset 0 -6px 0 rgba(0, 0, 0, 0.2);
+
+    h4 {
+      font-size: 1.6rem;
+      -webkit-text-stroke: 0.25rem #41091F;
+      text-shadow: 3px 3px 0 #41091F;
+    }
+  }
+}
+
+.namePlayer {
+  width: 100%;
+  padding: 9px 11px;
+  border: 2px solid #b8b8b8;
+  border-radius: 1.5rem;
+  outline: none;
+  background-color: #F0F0F0;
+  color: #242424;
+  font-size: 1.4rem;
+  text-align: center;
+
+  &:focus-visible {
+    border-color: #944AB3;
+  }
+
+  &::placeholder {
+    color: #b8b8b8;
+  }
+}
+
+.avatarAnim {
+  animation: bounceIn 0.3s cubic-bezier(0, 0.005, 0.32, 1.63) forwards;
+}
+
+@keyframes bounceIn {
+  0% {
+    transform: scale(0);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}

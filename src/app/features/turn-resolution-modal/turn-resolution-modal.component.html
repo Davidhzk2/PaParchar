@@ -1,0 +1,29 @@
+<section class="turn-modal" aria-labelledby="activity-title">
+  <svg viewBox="0 0 335 248" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path
+      d="M167.5 248C104.724 248 58.237 245.512 33.0615 240.804C21.5875 238.656 14.8172 236.13 12.8588 233.271C11.0403 232.234 8.51541 228.775 6.18985 218.588C2.08077 200.582 0 168.76 0 124C0 79.2401 2.08426 47.4179 6.18985 29.4157C8.51541 19.2287 11.0403 15.7699 12.8588 14.733C14.8172 11.8738 21.5875 9.34739 33.0615 7.20013C58.237 2.48774 104.727 0 167.5 0C230.273 0 276.763 2.48774 301.939 7.19626C313.412 9.34353 320.183 11.87 322.141 14.7291C323.96 15.766 326.485 19.2248 328.81 29.4118C332.919 47.4179 335 79.2401 335 123.996C335 168.752 332.916 200.578 328.81 218.584C326.485 228.771 323.96 232.23 322.141 233.267C320.183 236.126 313.412 238.653 301.939 240.8C276.767 245.508 230.276 247.996 167.5 247.996V248Z" />
+  </svg>
+
+  <div class="player">
+    <rive-player [src]="player.avatar.src" [artboard]="player.avatar.artboard"
+      [stateMachine]="player.avatar.stateMachine" [gender]="player.gender" [showGender]="false" [isIdle]="true"
+      size="large">
+    </rive-player>
+    <img src="../../../assets/Juegos/Dinamicas/logoBebe.png" alt="">
+  </div>
+
+  <p class="textActivity">{{ activity.prompt }}</p>
+
+  <div class="actions">
+    <button type="button" class="btnPrimary yes" (click)="resolveTurn(false)">
+      <h4>
+        ¡Lo hice!
+      </h4>
+    </button>
+    <button type="button" class="btnPrimary no" (click)="resolveTurn(true)">
+      <h4>
+        Bebí
+      </h4>
+    </button>
+  </div>
+</section>

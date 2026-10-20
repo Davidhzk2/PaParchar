@@ -1,0 +1,50 @@
+<ion-content [fullscreen]="true" class="game-content" [attr.data-intensity]="selectedIntensity()">
+  <main class="game-page">
+    <img src="/assets/Juegos/Baraja/bg.png" class="bgGame" alt="">
+    <section class="playersContainer" aria-label="Jugadores">
+      <h2>Es el turno de</h2>
+      <div class="playersWrapper">
+        @for (item of playerStage(); track item.position) {
+        <div class="player-seat" [class.player-seat--current]="item.position === 'current'">
+
+          <span>{{ item.player.name }}</span>
+          <div class="player-avatar">
+            <rive-player [src]="item.player.avatar.src" [artboard]="item.player.avatar.artboard"
+              [stateMachine]="item.player.avatar.stateMachine" [gender]="item.player.gender" [showGender]="false"
+              [isIdle]="true">
+            </rive-player>
+          </div>
+        </div>
+        }
+      </div>
+    </section>
+
+    @if (selectedGame() === 'barajas') {
+    <section class="cards-table" aria-label="Mazo de cartas">
+      <button type="button" class="card-deck" [class.card-deck--revealed]="revealedActivity()"
+        [class.card-deck--revealing]="isRevealingCard()" [disabled]="isResolvingTurn() || isRevealingCard()"
+        [attr.aria-label]="revealedActivity() ? 'Ver actividad revelada' : 'Sacar una carta'"
+        (click)="onDeckClick()">
+        @if (revealedActivity(); as activity) {
+        <img class="revealed-card" [src]="activity.image" [alt]="'Carta de ' + activity.category">
+        } @else {
+        @for (card of deckCards; track $index) {
+        <img class="deck-card" src="assets/Juegos/Baraja/Reverso.png" alt="">
+        }
+        }
+      </button>
+    </section>
+
+    } @else {
+    <section class="roulette" aria-live="polite">
+        <img src="assets/Juegos/Ruleta/Ruleta.png" alt="">
+    </section>
+    }
+
+    <button type="button" class="btnPrimary" (click)="goBack()">
+      <h4>
+        Regresar
+      </h4>
+    </button>
+  </main>
+</ion-content>

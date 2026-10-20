@@ -1,0 +1,82 @@
+<ion-content [fullscreen]="true" class="mode-content" [attr.data-intensity]="selectedIntensity">
+
+  <rive-intensity class="intensity-bg"></rive-intensity>
+
+  <div class="btnBack" (click)="closeGames()">
+    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 186.01 169.25">
+      <path
+        d="M186.01,102.92c0-42.96-25.85-60.17-109.72-55.88-1.75.09-3.47.27-5.21.42,11.1-7.97,20.83-15.28,24.8-18.92,7.9-7.08,10.96-15.5,5.82-22.86-5.13-7.04-13.7-6.92-22.71-2.97C69.35,6.7,13.58,47.05,6.01,54.43,2.07,58.12-.24,62.69.02,67.76s3.02,9.38,7.32,12.65c8.28,6.57,67.87,41.02,77.88,44,9.37,3.02,17.91,2.26,22.29-5.27,4.38-7.53.46-15.91-8.12-22.15-4.26-3.17-14.49-9.34-26.16-16.04,0,0,.02,0,.02.01,1.58-.14,3.16-.3,4.76-.38,65.37-3.34,74.45,2.06,74.45,24.05s-4.8,27.17-12.44,39.62c-4.01,7.33-2.18,16.46,4.58,21.36l.73.53c7.99,5.79,19.21,3.21,23.97-5.43,9.81-18,16.72-27.05,16.72-57.79Z" />
+    </svg>
+  </div>
+
+  <main class="mode-page">
+
+    <section class="intensity" [class.intensityGames]="gamesOpen" aria-labelledby="intensity-title">
+      <h1>Escoge la intensidad</h1>
+      <div class="intensity__container">
+        <div class="intensity__wrapper" [class.intensity__wrapper--row]="gamesOpen" #list (scroll)="onScroll()"
+          (touchstart)="onTouchStart()" (touchend)="onTouchEnd()" (touchcancel)="onTouchEnd()">
+
+          @for (intensity of intensities; track intensity.id; let i = $index) {
+          <button type="button" class="intensity__level" [class.selected]="selectedIntensity === intensity.id"
+            [attr.aria-pressed]="selectedIntensity === intensity.id" (click)="onLevelClick(i)">
+            <img [src]="intensity.image" [alt]="intensity.label">
+          </button>
+          }
+        </div>
+      </div>
+    </section>
+
+
+    @if (gamesOpen) {
+    <section class="games" aria-labelledby="games-title">
+      <h2>Juegos</h2>
+      <div class="game-options">
+        @for (game of games; track game.id) {
+        <button type="button" class="game-option" [class.selected]="selectedGame === game.id"
+          [class.game-option--cards]="game.id === 'barajas'" [class.game-option--roulette]="game.id === 'ruleta'"
+          [class.game-option--board]="game.id === 'tablero'" [attr.aria-pressed]="selectedGame === game.id"
+          (click)="onGameSelected(game.id)">
+
+          @if (game.id === 'ruleta') {
+          <img src="assets/Juegos/Ruleta/RuletaBg.png" alt="">
+          }
+
+          @if (game.id === 'barajas') {
+          <img src="assets/Juegos/Baraja/Baraja.png" alt="">
+          }
+
+          @if (game.id === 'tablero') {
+          <img src="assets/Juegos/Tablero/Tablero.png" alt="">
+          }
+
+          <div class="nameGame">
+            <h5>{{ game.label }}</h5>
+          </div>
+        </button>
+        }
+      </div>
+    </section>
+    }
+  </main>
+
+  <div class="players-dock" aria-label="Jugadores">
+
+    <button type="button" class="btnAdd" aria-label="Agregar jugador" (click)="openAddUserModal()">
+      <img src="../../assets/Botones/btn_add-front.png" alt="logo-add">
+      <img src="../../assets/Botones/btn-add-back.png" alt="logo-add">
+    </button>
+
+    <div class="players-scroll" aria-label="Lista de jugadores">
+      @for (player of players(); track $index) {
+      <button type="button" class="player-avatar" [attr.aria-label]="'Editar jugador ' + player.name"
+        (click)="openAddUserModal(player)">
+        <rive-player [src]="player.avatar.src" [artboard]="player.avatar.artboard"
+          [stateMachine]="player.avatar.stateMachine" [isIdle]="true" [gender]="player.gender" [showGender]="false"
+          size="small">
+        </rive-player>
+      </button>
+      }
+    </div>
+  </div>
+</ion-content>

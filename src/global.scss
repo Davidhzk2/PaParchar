@@ -35,3 +35,126 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import "@ionic/angular/css/palettes/dark.system.css";
+
+:root {
+	--ion-font-family: 'Boogaloo', sans-serif;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	font-family: 'Boogaloo', sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	line-height: 1;
+	margin: 0;
+	font-family: 'Boogaloo', sans-serif;
+	-webkit-text-stroke: 0.6rem #40204D;
+	paint-order: stroke fill;
+	stroke-linejoin: round;
+
+	text-shadow: 0.3rem 0.3rem 0 #40204D,
+		0.4rem 0.1rem 0 #40204D;
+
+	/*text-shadow: 4px 6px 0 #40204D,
+	6px 7px 0 #40204D,
+	6px 5px 0 #40204D;*/
+
+	color: #FFF;
+}
+
+button {
+	background-color: transparent;
+	border: none;
+	outline: none;
+}
+
+.addModal {
+	--background: rgba(0, 0, 0, 0.6);
+
+	.ion-page {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+}
+
+.turn-resolution-modal {
+	--width: min(92vw, 28rem);
+	--height: auto;
+	--background: transparent;
+	--box-shadow: none;
+	--backdrop-opacity: 0.7;
+	--overflow: visible;
+
+	&::part(content) {
+		background: transparent;
+		box-shadow: none;
+		overflow: visible;
+	}
+
+	.ion-page {
+		position: relative;
+		display: block;
+		height: auto;
+	}
+}
+
+.btnPrimary {
+	position: relative;
+
+	background-color: #FDB44D;
+	border: 5px solid #40204D;
+	paint-order: stroke fill;
+	box-shadow: inset 0 -6px 0 #D2953F;
+
+	width: 63%;
+	max-width: 210px;
+	height: 3.8rem;
+	border-radius: 3rem 3rem 6rem 6rem;
+	color: #FFF;
+	font-family: inherit;
+
+	margin: 0 auto;
+
+	h4 {
+		width: max-content;
+		font-size: 2.5rem;
+		position: absolute;
+		top: 0rem;
+		left: 50%;
+		transform: translateX(-50%);
+	}
+}
+
+@property --radial-a {
+	syntax: '<number>';
+	inherits: true;
+	initial-value: 1;
+}
+
+@property --bg-1 {
+	syntax: '<color>';
+	inherits: true;
+	initial-value: #48ccff;
+}
+
+@property --bg-2 {
+	syntax: '<color>';
+	inherits: true;
+	initial-value: #16a6f1;
+}
+
+@property --bg-3 {
+	syntax: '<color>';
+	inherits: true;
+	initial-value: #087bc8;
+}
