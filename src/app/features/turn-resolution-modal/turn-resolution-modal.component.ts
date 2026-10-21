@@ -15,6 +15,7 @@ import { RivePreviewComponent } from '../riveAnimation/player/player.component';
 export class TurnResolutionModalComponent {
   @Input({ required: true }) player!: Player;
   @Input({ required: true }) activity!: TurnActivity;
+  @Input() categoryColor = '#d4146d';
 
   constructor(private modalCtrl: ModalController) {}
 

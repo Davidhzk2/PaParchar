@@ -1,6 +1,8 @@
 <ion-content [fullscreen]="true" class="game-content" [attr.data-intensity]="selectedIntensity()">
   <main class="game-page">
-    <img src="/assets/Juegos/Baraja/bg.png" class="bgGame" alt="">
+    <img
+      [src]="selectedGame() === 'ruleta' ? 'assets/Juegos/Ruleta/bg.png' : selectedGame() === 'tablero' ? 'assets/Juegos/Tablero/bg.png' : 'assets/Juegos/Baraja/bg.png'"
+      class="bgGame" alt="">
     <section class="playersContainer" aria-label="Jugadores">
       <h2>Es el turno de</h2>
       <div class="playersWrapper">
@@ -11,7 +13,7 @@
           <div class="player-avatar">
             <rive-player [src]="item.player.avatar.src" [artboard]="item.player.avatar.artboard"
               [stateMachine]="item.player.avatar.stateMachine" [gender]="item.player.gender" [showGender]="false"
-              [isIdle]="true">
+              [isIdle]="item.position === 'current'">
             </rive-player>
           </div>
         </div>
@@ -35,9 +37,64 @@
       </button>
     </section>
 
+    } @else if (selectedGame() === 'ruleta') {
+    <section class="roulette" aria-label="Ruleta de categorías">
+      <button type="button" class="roulette-spin" [class.roulette-spin--spinning]="isSpinningRoulette()"
+        [style.--spin-start-rotation]="rouletteStartRotation() + 'deg'"
+        [style.--spin-rotation]="rouletteRotation() + 'deg'"
+        [disabled]="isSpinningRoulette() || isRouletteResultPending() || isResolvingTurn()"
+        [attr.aria-label]="isSpinningRoulette() ? 'Girando la ruleta' : isRouletteResultPending() ? 'Preparando el resultado' : 'Girar la ruleta'"
+        (click)="onRouletteClick()">
+        <img class="roulette-wheel" src="assets/Juegos/Ruleta/Ruleta.png" alt="">
+        <img class="roulette-center" src="assets/Juegos/Ruleta/Ruleta-centro.png" alt="">
+        <img class="roulette-indicator" src="assets/Juegos/Ruleta/Ruleta-indicaod.png" alt="">
+      </button>
+    </section>
     } @else {
-    <section class="roulette" aria-live="polite">
-        <img src="assets/Juegos/Ruleta/Ruleta.png" alt="">
+    <section class="board-game" aria-label="Tablero OCA">
+      <div class="board">
+        <img class="board-image" src="assets/Juegos/Tablero/Board.png" alt="Tablero OCA con 62 casillas">
+        <div class="board-tokens" aria-label="Posición de los jugadores">
+          @for (token of boardPlayerTokens(); track token.playerIndex) {
+          <span class="board-token" [class.board-token--female]="token.player.gender === 'female'"
+            [style.left.%]="(token.cell.column - 0.5 + ((token.cell.columnSpan ?? 1) - 1) / 2) / 9 * 100"
+            [style.top.%]="(token.cell.row - 0.5 + ((token.cell.rowSpan ?? 1) - 1) / 2) / 8 * 100"
+            [style.--token-order]="token.playerIndex" [attr.aria-label]="token.player.name"
+            [style.--token-offset-x]="token.offsetX + 'px'"
+            [style.--token-offset-y]="token.offsetY + 'px'"
+            [title]="token.player.name">
+            {{ token.player.name.charAt(0).toUpperCase() }}
+          </span>
+          }
+        </div>
+      </div>
+      <div class="dice-area" aria-label="Lanzamiento del dado">
+        <button type="button" class="dice-button" [class.dice-button--rolling]="isRollingDice()"
+          [class.dice-button--moving]="isMovingBoardToken()"
+          [disabled]="isRollingDice() || isMovingBoardToken() || isResolvingTurn()" (click)="onDiceClick()"
+          [attr.aria-label]="isRollingDice() ? 'Lanzando el dado' : isMovingBoardToken() ? 'Avanzando jugador' : diceValue() === null ? 'Lanzar el dado' : 'Lanzar el dado, último resultado ' + diceValue()">
+          @if (diceValue() === null || isRollingDice()) {
+          <img class="dice-image" src="assets/Juegos/Tablero/Dado.png" alt="">
+          } @else {
+          <span class="dice-face" aria-hidden="true">
+            @for (position of dicePipPositions; track position) {
+            <span class="dice-pip" [class.dice-pip--visible]="dicePips().includes(position)"></span>
+            }
+          </span>
+          }
+        </button>
+        <p class="dice-result" aria-live="polite">
+          @if (isRollingDice()) {
+          Lanzando...
+          } @else if (isMovingBoardToken()) {
+          Avanzando {{ diceValue() }} casillas...
+          } @else if (diceValue() !== null) {
+          Salió {{ diceValue() }}
+          } @else {
+          Toca el dado para lanzarlo
+          }
+        </p>
+      </div>
     </section>
     }
 
