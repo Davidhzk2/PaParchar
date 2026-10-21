@@ -4,7 +4,7 @@ import { Component } from "@angular/core";
     selector: 'btn-icon',
     template: `
     <button>
-      <img src="../../assets/Logo.png" alt="Logo" />
+      <img src="assets/Logo.png" alt="Logo" />
     </button>`
 })
 
